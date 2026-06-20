@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --font-geist-mono: "Geist Mono", monospace;
+}
+
+h1, h2, h3 {
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+body {
+  background-color: #f9f8f6;
+  background-image: radial-gradient(circle, #E5E5E5 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: #343844;
+  font-family: "Geist Mono", monospace;
+  -webkit-font-smoothing: antialiased;
+}

@@ -1,0 +1,40 @@
+---
+import { BookOpen } from '@lucide/astro';
+
+const skills = [
+  { name: 'Vibe Coding 😎', detail: 'Shipping with Claude Code when the idea can\'t wait' },
+  { name: 'Product Design', detail: 'From early concepts to developer-ready designs' },
+  { name: 'UX/UI Design', detail: 'Interfaces that are intuitive, clean, and accessible' },
+  { name: 'Webflow Development', detail: 'Fully responsive, CMS-powered websites' },
+  { name: 'Design Systems', detail: 'Scalable systems for consistency across teams' },
+  { name: 'Branding', detail: 'Visual identity and storytelling for mission-driven teams' },
+  { name: 'Prototyping & Testing', detail: 'Clickable prototypes to validate ideas early' },
+];
+
+const tools = ['Figma', 'Figjam', 'Webflow', 'Notion', 'Photoshop'];
+---
+
+<section class="px-6 py-8 sm:py-12">
+  <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-6">
+    <span class="inline-flex items-center justify-center w-9 h-9 rounded-[6px] bg-[rgba(61,76,116,0.1)]">
+      <BookOpen size={18} color="#3d4c74" strokeWidth={1.5} />
+    </span>
+    <h2 class="text-[28px] text-[#343844] font-normal leading-[1.2]">Skills</h2>
+  </div>
+
+  <p class="text-[15px] text-[#7a7f87] leading-[1.6] mb-10">
+    I blend product thinking with visual clarity to deliver scalable, human-centered
+    design. Here's what I bring to the table:
+  </p>
+
+  <div class="flex flex-col gap-2 mb-10">
+    {skills.map((skill) => (
+      <div class="py-3 flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-4">
+        <span class="text-[15px] text-[#343844] font-semibold shrink-0">{skill.name}</span>
+        <span class="hidden sm:block flex-1 border-b border-dotted border-[#dadce0] mb-[0.2em]"></span>
+        <span class="text-[15px] text-[#7a7f87] sm:shrink-0">{skill.detail}</span>
+      </div>
+    ))}
+  </div>
+
+</section>

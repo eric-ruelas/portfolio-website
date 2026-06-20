@@ -1,0 +1,66 @@
+---
+import { Briefcase, Download } from '@lucide/astro';
+
+const resumeUrl = import.meta.env.PUBLIC_RESUME_URL;
+
+const jobs = [
+  {
+    title: 'Senior Product Designer',
+    company: 'CareMessage',
+    years: '2022–Present',
+  },
+  {
+    title: 'Product Designer',
+    company: 'Plexuss',
+    years: '2019–2022',
+  },
+];
+---
+
+<section id="work" class="px-6 py-8 sm:py-12">
+  <div class="flex items-start sm:items-center justify-between mb-10">
+    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+      <span class="inline-flex items-center justify-center w-9 h-9 rounded-[6px] bg-[rgba(61,76,116,0.1)]">
+        <Briefcase size={18} color="#3d4c74" strokeWidth={1.5} />
+      </span>
+      <h2 class="text-[28px] text-[#343844] font-normal leading-[1.2]">Work Experience</h2>
+    </div>
+    <button
+      id="download-cv-btn"
+      data-url={resumeUrl}
+      class="hidden sm:inline-flex items-center gap-1.5 text-[13px] text-[#7a7f87] hover:text-[#3d4c74] transition-colors duration-150 cursor-pointer"
+    >
+      Download CV
+      <Download size={13} strokeWidth={1.5} />
+    </button>
+
+    <script>
+      const cvBtn = document.getElementById('download-cv-btn') as HTMLElement;
+      cvBtn?.addEventListener('click', () => {
+        const a = document.createElement('a');
+        a.href = cvBtn.dataset.url ?? '';
+        a.download = '';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+    </script>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    {jobs.map((job) => (
+      <div class="py-4 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4">
+        <span class="text-[22px] text-[#343844] font-normal leading-[1.2] shrink-0">{job.company}</span>
+        <span class="hidden sm:block flex-1 border-b border-dotted border-[#dadce0] mb-[0.2em]"></span>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="inline-flex items-center px-3 py-1.5 rounded-lg border border-[#3d4c74]/30 bg-[rgba(61,76,116,0.08)] text-[#3d4c74] text-[13px]">
+            {job.title}
+          </span>
+          <span class="inline-flex items-center px-3 py-1.5 rounded-lg border border-[#3d4c74]/30 bg-[rgba(61,76,116,0.08)] text-[#3d4c74] text-[13px]">
+            {job.years}
+          </span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

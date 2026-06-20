@@ -1,0 +1,191 @@
+---
+import { Download, Copy, Check, Menu, X } from '@lucide/astro';
+
+const resumeUrl = import.meta.env.PUBLIC_RESUME_URL ?? '';
+const email = import.meta.env.PUBLIC_EMAIL ?? '';
+---
+
+<header class="px-6 pt-6">
+  <nav class="flex items-center justify-between gap-3 sm:gap-6">
+
+    <!-- Profile photo + name -->
+    <div class="flex items-center gap-3 shrink-0">
+      <div class="w-10 h-10 rounded-[10px] overflow-hidden shrink-0">
+        <img
+          src="/images/profile.jpg"
+          alt="Eric Ruelas"
+          class="w-full h-full object-cover block"
+        />
+      </div>
+      <div class="flex flex-col leading-tight">
+        <span class="text-[#343844] text-[18px] font-normal leading-none">Eric Ruelas</span>
+        <span class="text-[#7a7f87] text-[13px] font-normal leading-none mt-1">Senior Product Designer</span>
+      </div>
+    </div>
+
+    <!-- Desktop CTA buttons -->
+    <div class="hidden sm:flex items-center gap-2 shrink-0">
+      <button
+        id="download-resume-btn"
+        data-url={resumeUrl}
+        class="group inline-flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-[48px] bg-[#3d4c74] hover:bg-white hover:text-[#3d4c74] border border-transparent hover:border-[#3d4c74] text-[#f9f8f6] text-[14px] cursor-pointer transition-colors duration-200"
+      >
+        <span class="bg-[#f9f8f6] w-7 h-7 rounded-full flex items-center justify-center shrink-0">
+          <span id="download-icon"><Download size={14} color="#3d4c74" strokeWidth={1.5} /></span>
+          <span id="download-check-icon" class="hidden"><Check size={14} color="#3d4c74" strokeWidth={1.5} /></span>
+        </span>
+        <span id="download-label">Download Resume</span>
+      </button>
+
+      <button
+        id="copy-email-btn"
+        data-email={email}
+        class="group inline-flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-[48px] border border-[#3d4c74] text-[#3d4c74] hover:bg-[#3d4c74] hover:text-white text-[14px] cursor-pointer transition-colors duration-200"
+      >
+        <span id="email-label">Copy Email</span>
+        <span class="bg-[rgba(61,76,116,0.1)] group-hover:bg-[#f9f8f6] w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors duration-200">
+          <span id="email-copy-icon"><Copy size={14} color="#3d4c74" strokeWidth={1.5} /></span>
+          <span id="email-check-icon" class="hidden"><Check size={14} color="#3d4c74" strokeWidth={1.5} /></span>
+        </span>
+      </button>
+    </div>
+
+    <!-- Mobile menu toggle -->
+    <button
+      id="mobile-menu-btn"
+      class="sm:hidden flex items-center justify-center w-9 h-9 rounded-full border border-[#3d4c74] text-[#3d4c74] cursor-pointer"
+      aria-label="Toggle menu"
+    >
+      <span id="menu-icon"><Menu size={16} strokeWidth={1.5} /></span>
+      <span id="close-icon" class="hidden"><X size={16} strokeWidth={1.5} /></span>
+    </button>
+  </nav>
+
+  <!-- Mobile dropdown menu — starts hidden, JS adds/removes 'flex' -->
+  <div id="mobile-menu" class="hidden sm:hidden mt-4 flex-col gap-2 pb-2">
+    <button
+      id="mobile-download-btn"
+      data-url={resumeUrl}
+      class="group inline-flex items-center gap-2 pl-2 pr-3 py-2 rounded-[48px] bg-[#3d4c74] text-[#f9f8f6] text-[14px] cursor-pointer w-full"
+    >
+      <span class="bg-[#f9f8f6] w-7 h-7 rounded-full flex items-center justify-center shrink-0">
+        <span id="mobile-download-icon"><Download size={14} color="#3d4c74" strokeWidth={1.5} /></span>
+        <span id="mobile-download-check" class="hidden"><Check size={14} color="#3d4c74" strokeWidth={1.5} /></span>
+      </span>
+      <span id="mobile-download-label">Download Resume</span>
+    </button>
+
+    <button
+      id="mobile-copy-btn"
+      data-email={email}
+      class="group inline-flex items-center gap-2 pl-3 pr-2 py-2 rounded-[48px] border border-[#3d4c74] text-[#3d4c74] text-[14px] cursor-pointer w-full"
+    >
+      <span id="mobile-email-label">Copy Email</span>
+      <span class="ml-auto bg-[rgba(61,76,116,0.1)] w-7 h-7 rounded-full flex items-center justify-center shrink-0">
+        <span id="mobile-copy-icon"><Copy size={14} color="#3d4c74" strokeWidth={1.5} /></span>
+        <span id="mobile-check-icon" class="hidden"><Check size={14} color="#3d4c74" strokeWidth={1.5} /></span>
+      </span>
+    </button>
+  </div>
+</header>
+
+<script>
+  function triggerDownload(url: string) {
+    if (!url) return;
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = '';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function showConfirmation(label: HTMLElement, icon: HTMLElement, check: HTMLElement, defaultText: string) {
+    label.textContent = label === document.getElementById('download-label') || label === document.getElementById('mobile-download-label')
+      ? 'Downloaded!' : 'Copied!';
+    icon.classList.add('hidden');
+    check.classList.remove('hidden');
+    setTimeout(() => {
+      label.textContent = defaultText;
+      icon.classList.remove('hidden');
+      check.classList.add('hidden');
+    }, 2000);
+  }
+
+  // Desktop download
+  const downloadBtn = document.getElementById('download-resume-btn') as HTMLElement;
+  downloadBtn?.addEventListener('click', () => {
+    triggerDownload(downloadBtn.dataset.url ?? '');
+    showConfirmation(
+      document.getElementById('download-label') as HTMLElement,
+      document.getElementById('download-icon') as HTMLElement,
+      document.getElementById('download-check-icon') as HTMLElement,
+      'Download Resume'
+    );
+  });
+
+  // Desktop copy email
+  const emailBtn = document.getElementById('copy-email-btn') as HTMLElement;
+  emailBtn?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(emailBtn.dataset.email ?? '');
+      showConfirmation(
+        document.getElementById('email-label') as HTMLElement,
+        document.getElementById('email-copy-icon') as HTMLElement,
+        document.getElementById('email-check-icon') as HTMLElement,
+        'Copy Email'
+      );
+    } catch {
+      // Clipboard access denied — silently ignore
+    }
+  });
+
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('mobile-menu-btn') as HTMLElement;
+  const mobileMenu = document.getElementById('mobile-menu') as HTMLElement;
+  const menuIcon = document.getElementById('menu-icon') as HTMLElement;
+  const closeIcon = document.getElementById('close-icon') as HTMLElement;
+
+  menuBtn?.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.contains('flex');
+    if (isOpen) {
+      mobileMenu.classList.remove('flex');
+      mobileMenu.classList.add('hidden');
+      menuIcon.classList.remove('hidden');
+      closeIcon.classList.add('hidden');
+    } else {
+      mobileMenu.classList.add('flex');
+      mobileMenu.classList.remove('hidden');
+      menuIcon.classList.add('hidden');
+      closeIcon.classList.remove('hidden');
+    }
+  });
+
+  // Mobile download
+  const mobileDownloadBtn = document.getElementById('mobile-download-btn') as HTMLElement;
+  mobileDownloadBtn?.addEventListener('click', () => {
+    triggerDownload(mobileDownloadBtn.dataset.url ?? '');
+    showConfirmation(
+      document.getElementById('mobile-download-label') as HTMLElement,
+      document.getElementById('mobile-download-icon') as HTMLElement,
+      document.getElementById('mobile-download-check') as HTMLElement,
+      'Download Resume'
+    );
+  });
+
+  // Mobile copy email
+  const mobileCopyBtn = document.getElementById('mobile-copy-btn') as HTMLElement;
+  mobileCopyBtn?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(mobileCopyBtn.dataset.email ?? '');
+      showConfirmation(
+        document.getElementById('mobile-email-label') as HTMLElement,
+        document.getElementById('mobile-copy-icon') as HTMLElement,
+        document.getElementById('mobile-check-icon') as HTMLElement,
+        'Copy Email'
+      );
+    } catch {
+      // Clipboard access denied — silently ignore
+    }
+  });
+</script>

@@ -1,0 +1,81 @@
+---
+import { Quote } from '@lucide/astro';
+
+const testimonials = [
+  {
+    quote: "I had the privilege of working with Eric at CareMessage. He is a thoughtful and impact-driven designer who approaches problems with a user-centered mindset. Eric effectively balances big-picture thinking with attention to detail. He builds and fosters strong relationships with product managers, engineers, and stakeholders. His clear communication regarding design decisions, along with his ability to advocate for users, makes him a trusted partner in achieving product outcomes.",
+    name: "Sarah King",
+    role: "Senior Product Designer – Healthcare Analytics @ IQVIA Digital",
+  },
+];
+
+const TRUNCATE_LENGTH = 180;
+---
+
+<section class="px-6 py-8 sm:py-12">
+  <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-8">
+    <span class="inline-flex items-center justify-center w-9 h-9 rounded-[6px] bg-[rgba(61,76,116,0.1)]">
+      <Quote size={18} color="#3d4c74" strokeWidth={1.5} />
+    </span>
+    <h2 class="text-[28px] text-[#343844] font-normal leading-[1.2]">Testimonials</h2>
+  </div>
+
+  <div class="flex flex-col gap-8">
+    {testimonials.map((t, i) => {
+      const short = t.quote.slice(0, TRUNCATE_LENGTH).trimEnd();
+      const needsTruncation = t.quote.length > TRUNCATE_LENGTH;
+      return (
+        <div class="pl-4 border-l-2 border-[#dadce0]">
+          <p class="text-[15px] text-[#343844] leading-[1.7]">
+            <span class="short-quote" data-index={i}>
+              {needsTruncation ? short + '… ' : t.quote}
+              {needsTruncation && (
+                <button
+                  class="read-more-btn inline text-[#7a7f87] hover:text-[#3d4c74] transition-colors duration-150 text-[13px]"
+                  data-index={i}
+                >
+                  Read more ↓
+                </button>
+              )}
+            </span>
+            <span class="full-quote hidden" data-index={i}>
+              {t.quote}{' '}
+              <button
+                class="read-less-btn inline text-[#7a7f87] hover:text-[#3d4c74] transition-colors duration-150 text-[13px]"
+                data-index={i}
+              >
+                Read less ↑
+              </button>
+            </span>
+          </p>
+          <div class="mt-4">
+            <p class="text-[15px] text-[#343844] font-medium">{t.name}</p>
+            <p class="text-[13px] text-[#7a7f87] mt-0.5">{t.role}</p>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.read-more-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const idx = (btn as HTMLElement).dataset.index;
+      const short = document.querySelector(`.short-quote[data-index="${idx}"]`) as HTMLElement;
+      const full = document.querySelector(`.full-quote[data-index="${idx}"]`) as HTMLElement;
+      short.classList.add('hidden');
+      full.classList.remove('hidden');
+    });
+  });
+
+  document.querySelectorAll('.read-less-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const idx = (btn as HTMLElement).dataset.index;
+      const short = document.querySelector(`.short-quote[data-index="${idx}"]`) as HTMLElement;
+      const full = document.querySelector(`.full-quote[data-index="${idx}"]`) as HTMLElement;
+      full.classList.add('hidden');
+      short.classList.remove('hidden');
+    });
+  });
+</script>
