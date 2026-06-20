@@ -7,65 +7,67 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
 
 <header class="px-6 pt-6">
 
-  <!-- Compact nav -->
-  <nav
-    id="nav-compact"
-    class="flex items-center justify-between gap-3 sm:gap-6 transition-opacity duration-200"
+  <!-- Compact nav wrapper — animates height/opacity, never uses display:none -->
+  <div
+    id="nav-compact-wrapper"
+    class="overflow-hidden transition-all duration-250 ease-out"
+    style="max-height: 80px; opacity: 1; pointer-events: auto;"
   >
-    <div class="flex items-center gap-3 shrink-0">
-      <div class="w-10 h-10 rounded-[10px] overflow-hidden shrink-0">
-        <img src="/images/profile.jpg" alt="Eric Ruelas" class="w-full h-full object-cover block" />
+    <nav class="flex items-center justify-between gap-3 sm:gap-6">
+      <div class="flex items-center gap-3 shrink-0">
+        <div class="w-10 h-10 rounded-[10px] overflow-hidden shrink-0">
+          <img src="/images/profile.jpg" alt="Eric Ruelas" class="w-full h-full object-cover block" />
+        </div>
+        <div class="flex flex-col leading-tight">
+          <span class="text-[#343844] text-[18px] font-normal leading-none">Eric Ruelas</span>
+          <span class="text-[#7a7f87] text-[13px] font-normal leading-none mt-1">Senior Product Designer</span>
+        </div>
       </div>
-      <div class="flex flex-col leading-tight">
-        <span class="text-[#343844] text-[18px] font-normal leading-none">Eric Ruelas</span>
-        <span class="text-[#7a7f87] text-[13px] font-normal leading-none mt-1">Senior Product Designer</span>
+
+      <!-- Desktop CTA buttons -->
+      <div class="hidden sm:flex items-center gap-2 shrink-0">
+        <button
+          id="download-resume-btn"
+          data-url={resumeUrl}
+          class="group inline-flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-[48px] bg-[#3d4c74] hover:bg-white hover:text-[#3d4c74] border border-transparent hover:border-[#3d4c74] text-[#f9f8f6] text-[14px] cursor-pointer transition-colors duration-200"
+        >
+          <span class="bg-[#f9f8f6] w-7 h-7 rounded-full flex items-center justify-center shrink-0">
+            <span id="download-icon"><Download size={14} color="#3d4c74" strokeWidth={1.5} /></span>
+            <span id="download-check-icon" class="hidden"><Check size={14} color="#3d4c74" strokeWidth={1.5} /></span>
+          </span>
+          <span id="download-label">Download Resume</span>
+        </button>
+
+        <button
+          id="copy-email-btn"
+          data-email={email}
+          class="group inline-flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-[48px] border border-[#3d4c74] text-[#3d4c74] hover:bg-[#3d4c74] hover:text-white text-[14px] cursor-pointer transition-colors duration-200"
+        >
+          <span id="email-label">Copy Email</span>
+          <span class="bg-[rgba(61,76,116,0.1)] group-hover:bg-[#f9f8f6] w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors duration-200">
+            <span id="email-copy-icon"><Copy size={14} color="#3d4c74" strokeWidth={1.5} /></span>
+            <span id="email-check-icon" class="hidden"><Check size={14} color="#3d4c74" strokeWidth={1.5} /></span>
+          </span>
+        </button>
       </div>
-    </div>
 
-    <!-- Desktop CTA buttons -->
-    <div class="hidden sm:flex items-center gap-2 shrink-0">
+      <!-- Mobile hamburger -->
       <button
-        id="download-resume-btn"
-        data-url={resumeUrl}
-        class="group inline-flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-[48px] bg-[#3d4c74] hover:bg-white hover:text-[#3d4c74] border border-transparent hover:border-[#3d4c74] text-[#f9f8f6] text-[14px] cursor-pointer transition-colors duration-200"
+        id="mobile-menu-btn"
+        class="sm:hidden flex items-center justify-center w-9 h-9 rounded-full border border-[#3d4c74] text-[#3d4c74] cursor-pointer"
+        aria-label="Open menu"
       >
-        <span class="bg-[#f9f8f6] w-7 h-7 rounded-full flex items-center justify-center shrink-0">
-          <span id="download-icon"><Download size={14} color="#3d4c74" strokeWidth={1.5} /></span>
-          <span id="download-check-icon" class="hidden"><Check size={14} color="#3d4c74" strokeWidth={1.5} /></span>
-        </span>
-        <span id="download-label">Download Resume</span>
+        <Menu size={16} strokeWidth={1.5} />
       </button>
+    </nav>
+  </div>
 
-      <button
-        id="copy-email-btn"
-        data-email={email}
-        class="group inline-flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-[48px] border border-[#3d4c74] text-[#3d4c74] hover:bg-[#3d4c74] hover:text-white text-[14px] cursor-pointer transition-colors duration-200"
-      >
-        <span id="email-label">Copy Email</span>
-        <span class="bg-[rgba(61,76,116,0.1)] group-hover:bg-[#f9f8f6] w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors duration-200">
-          <span id="email-copy-icon"><Copy size={14} color="#3d4c74" strokeWidth={1.5} /></span>
-          <span id="email-check-icon" class="hidden"><Check size={14} color="#3d4c74" strokeWidth={1.5} /></span>
-        </span>
-      </button>
-    </div>
-
-    <!-- Mobile hamburger -->
-    <button
-      id="mobile-menu-btn"
-      class="sm:hidden flex items-center justify-center w-9 h-9 rounded-full border border-[#3d4c74] text-[#3d4c74] cursor-pointer"
-      aria-label="Open menu"
-    >
-      <Menu size={16} strokeWidth={1.5} />
-    </button>
-  </nav>
-
-  <!-- Mobile expanded menu — controlled via inline style transitions -->
+  <!-- Mobile expanded menu — no display toggling, only max-height/opacity -->
   <div
     id="mobile-menu"
     class="sm:hidden flex flex-col overflow-hidden transition-all duration-300 ease-out"
     style="max-height: 0; opacity: 0; pointer-events: none;"
   >
-    <!-- Top row: large photo + name + X -->
     <div class="flex items-center gap-4 pt-1">
       <div class="w-16 h-16 rounded-[14px] overflow-hidden shrink-0">
         <img src="/images/profile.jpg" alt="Eric Ruelas" class="w-full h-full object-cover block" />
@@ -83,7 +85,6 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
       </button>
     </div>
 
-    <!-- Centered buttons -->
     <div class="flex flex-col items-center gap-3 mt-6 pb-2">
       <button
         id="mobile-download-btn"
@@ -130,35 +131,25 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
     }, 2000);
   }
 
-  const navCompact = document.getElementById('nav-compact') as HTMLElement;
+  const navWrapper = document.getElementById('nav-compact-wrapper') as HTMLElement;
   const mobileMenu = document.getElementById('mobile-menu') as HTMLElement;
 
   function openMenu() {
-    // Fade out compact nav, then hide it
-    navCompact.style.opacity = '0';
-    navCompact.style.pointerEvents = 'none';
-    setTimeout(() => { navCompact.style.display = 'none'; }, 200);
-
-    // Expand menu
-    mobileMenu.style.maxHeight = '280px';
+    navWrapper.style.maxHeight = '0';
+    navWrapper.style.opacity = '0';
+    navWrapper.style.pointerEvents = 'none';
+    mobileMenu.style.maxHeight = '300px';
     mobileMenu.style.opacity = '1';
     mobileMenu.style.pointerEvents = 'auto';
   }
 
   function closeMenu() {
-    // Collapse menu
     mobileMenu.style.maxHeight = '0';
     mobileMenu.style.opacity = '0';
     mobileMenu.style.pointerEvents = 'none';
-
-    // Restore compact nav after menu starts collapsing
-    navCompact.style.display = '';
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        navCompact.style.opacity = '1';
-        navCompact.style.pointerEvents = 'auto';
-      });
-    });
+    navWrapper.style.maxHeight = '80px';
+    navWrapper.style.opacity = '1';
+    navWrapper.style.pointerEvents = 'auto';
   }
 
   document.getElementById('mobile-menu-btn')?.addEventListener('click', openMenu);
