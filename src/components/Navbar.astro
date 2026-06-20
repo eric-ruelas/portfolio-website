@@ -5,12 +5,39 @@ const resumeUrl = import.meta.env.PUBLIC_RESUME_URL ?? '';
 const email = import.meta.env.PUBLIC_EMAIL ?? '';
 ---
 
+<style>
+  /* Compact nav: collapses fast with acceleration */
+  #nav-compact-wrapper {
+    overflow: hidden;
+    transition:
+      max-height 0.22s cubic-bezier(0.4, 0, 1, 1),
+      opacity 0.18s ease;
+  }
+
+  /* Menu wrapper: expands with deceleration (feels like opening a drawer) */
+  #mobile-menu {
+    overflow: hidden;
+    transition:
+      max-height 0.38s cubic-bezier(0.0, 0, 0.2, 1),
+      opacity 0.28s ease;
+  }
+
+  /* Inner content slides down from slightly above */
+  #mobile-menu-inner {
+    transition: transform 0.38s cubic-bezier(0.0, 0, 0.2, 1);
+  }
+
+  /* Staggered button fade-in */
+  #mobile-menu .menu-btn {
+    transition: opacity 0.22s ease;
+  }
+</style>
+
 <header class="px-6 pt-6">
 
-  <!-- Compact nav wrapper — animates height/opacity, never uses display:none -->
+  <!-- Compact nav wrapper -->
   <div
     id="nav-compact-wrapper"
-    class="overflow-hidden transition-all duration-250 ease-out"
     style="max-height: 80px; opacity: 1; pointer-events: auto;"
   >
     <nav class="flex items-center justify-between gap-3 sm:gap-6">
@@ -62,49 +89,58 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
     </nav>
   </div>
 
-  <!-- Mobile expanded menu — no display toggling, only max-height/opacity -->
+  <!-- Mobile expanded menu -->
   <div
     id="mobile-menu"
-    class="sm:hidden flex flex-col overflow-hidden transition-all duration-300 ease-out"
+    class="sm:hidden flex flex-col"
     style="max-height: 0; opacity: 0; pointer-events: none;"
   >
-    <div class="flex items-center gap-4 pt-1">
-      <div class="w-16 h-16 rounded-[14px] overflow-hidden shrink-0">
-        <img src="/images/profile.jpg" alt="Eric Ruelas" class="w-full h-full object-cover block" />
-      </div>
-      <div class="flex flex-col leading-tight">
-        <span class="text-[#343844] text-[20px] font-normal leading-none">Eric Ruelas</span>
-        <span class="text-[#7a7f87] text-[13px] font-normal leading-none mt-1.5">Senior Product Designer</span>
-      </div>
-      <button
-        id="mobile-close-btn"
-        class="ml-auto flex items-center justify-center w-9 h-9 rounded-full border border-[#dadce0] text-[#7a7f87] cursor-pointer shrink-0"
-        aria-label="Close menu"
-      >
-        <X size={16} strokeWidth={1.5} />
-      </button>
-    </div>
+    <!-- Inner content: slides in from slightly above -->
+    <div id="mobile-menu-inner" style="transform: translateY(-10px);">
 
-    <div class="flex flex-col items-center gap-3 mt-6 pb-2">
-      <button
-        id="mobile-download-btn"
-        data-url={resumeUrl}
-        class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[48px] bg-[#3d4c74] text-[#f9f8f6] text-[15px] cursor-pointer w-[200px]"
-      >
-        <span id="mobile-download-icon"><Download size={15} color="#f9f8f6" strokeWidth={1.5} /></span>
-        <span id="mobile-download-check" class="hidden"><Check size={15} color="#f9f8f6" strokeWidth={1.5} /></span>
-        <span id="mobile-download-label">View Resume</span>
-      </button>
+      <!-- Profile row -->
+      <div class="flex items-center gap-4 pt-1">
+        <div class="w-16 h-16 rounded-[14px] overflow-hidden shrink-0">
+          <img src="/images/profile.jpg" alt="Eric Ruelas" class="w-full h-full object-cover block" />
+        </div>
+        <div class="flex flex-col leading-tight">
+          <span class="text-[#343844] text-[20px] font-normal leading-none">Eric Ruelas</span>
+          <span class="text-[#7a7f87] text-[13px] font-normal leading-none mt-1.5">Senior Product Designer</span>
+        </div>
+        <button
+          id="mobile-close-btn"
+          class="ml-auto flex items-center justify-center w-9 h-9 rounded-full border border-[#dadce0] text-[#7a7f87] cursor-pointer shrink-0"
+          aria-label="Close menu"
+        >
+          <X size={16} strokeWidth={1.5} />
+        </button>
+      </div>
 
-      <button
-        id="mobile-copy-btn"
-        data-email={email}
-        class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[48px] border border-[#3d4c74] text-[#3d4c74] text-[15px] cursor-pointer w-[200px]"
-      >
-        <span id="mobile-copy-icon"><Copy size={15} color="#3d4c74" strokeWidth={1.5} /></span>
-        <span id="mobile-check-icon" class="hidden"><Check size={15} color="#3d4c74" strokeWidth={1.5} /></span>
-        <span id="mobile-email-label">Copy Email</span>
-      </button>
+      <!-- Buttons with staggered opacity -->
+      <div class="flex flex-col items-center gap-3 mt-6 pb-2">
+        <button
+          id="mobile-download-btn"
+          data-url={resumeUrl}
+          class="menu-btn inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[48px] bg-[#3d4c74] text-[#f9f8f6] text-[15px] cursor-pointer w-[200px]"
+          style="opacity: 0;"
+        >
+          <span id="mobile-download-icon"><Download size={15} color="#f9f8f6" strokeWidth={1.5} /></span>
+          <span id="mobile-download-check" class="hidden"><Check size={15} color="#f9f8f6" strokeWidth={1.5} /></span>
+          <span id="mobile-download-label">View Resume</span>
+        </button>
+
+        <button
+          id="mobile-copy-btn"
+          data-email={email}
+          class="menu-btn inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[48px] border border-[#3d4c74] text-[#3d4c74] text-[15px] cursor-pointer w-[200px]"
+          style="opacity: 0;"
+        >
+          <span id="mobile-copy-icon"><Copy size={15} color="#3d4c74" strokeWidth={1.5} /></span>
+          <span id="mobile-check-icon" class="hidden"><Check size={15} color="#3d4c74" strokeWidth={1.5} /></span>
+          <span id="mobile-email-label">Copy Email</span>
+        </button>
+      </div>
+
     </div>
   </div>
 </header>
@@ -131,24 +167,43 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
     }, 2000);
   }
 
-  const navWrapper = document.getElementById('nav-compact-wrapper') as HTMLElement;
-  const mobileMenu = document.getElementById('mobile-menu') as HTMLElement;
+  const navWrapper  = document.getElementById('nav-compact-wrapper') as HTMLElement;
+  const mobileMenu  = document.getElementById('mobile-menu') as HTMLElement;
+  const menuInner   = document.getElementById('mobile-menu-inner') as HTMLElement;
+  const downloadBtn2 = document.getElementById('mobile-download-btn') as HTMLElement;
+  const copyBtn2     = document.getElementById('mobile-copy-btn') as HTMLElement;
 
   function openMenu() {
+    // Collapse compact nav
     navWrapper.style.maxHeight = '0';
-    navWrapper.style.opacity = '0';
+    navWrapper.style.opacity   = '0';
     navWrapper.style.pointerEvents = 'none';
-    mobileMenu.style.maxHeight = '300px';
-    mobileMenu.style.opacity = '1';
+
+    // Expand menu + slide inner content in
+    mobileMenu.style.maxHeight    = '300px';
+    mobileMenu.style.opacity      = '1';
     mobileMenu.style.pointerEvents = 'auto';
+    menuInner.style.transform     = 'translateY(0)';
+
+    // Stagger buttons
+    setTimeout(() => { downloadBtn2.style.opacity = '1'; }, 140);
+    setTimeout(() => { copyBtn2.style.opacity     = '1'; }, 200);
   }
 
   function closeMenu() {
-    mobileMenu.style.maxHeight = '0';
-    mobileMenu.style.opacity = '0';
+    // Fade buttons out instantly
+    downloadBtn2.style.opacity = '0';
+    copyBtn2.style.opacity     = '0';
+
+    // Collapse menu
+    mobileMenu.style.maxHeight    = '0';
+    mobileMenu.style.opacity      = '0';
     mobileMenu.style.pointerEvents = 'none';
-    navWrapper.style.maxHeight = '80px';
-    navWrapper.style.opacity = '1';
+    menuInner.style.transform     = 'translateY(-10px)';
+
+    // Restore compact nav
+    navWrapper.style.maxHeight    = '80px';
+    navWrapper.style.opacity      = '1';
     navWrapper.style.pointerEvents = 'auto';
   }
 
