@@ -7,10 +7,11 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
 
 <header class="px-6 pt-6">
 
-  <!-- Compact nav — hidden on mobile when menu is open -->
-  <nav id="nav-compact" class="flex items-center justify-between gap-3 sm:gap-6">
-
-    <!-- Profile photo + name -->
+  <!-- Compact nav -->
+  <nav
+    id="nav-compact"
+    class="flex items-center justify-between gap-3 sm:gap-6 transition-opacity duration-200"
+  >
     <div class="flex items-center gap-3 shrink-0">
       <div class="w-10 h-10 rounded-[10px] overflow-hidden shrink-0">
         <img src="/images/profile.jpg" alt="Eric Ruelas" class="w-full h-full object-cover block" />
@@ -58,11 +59,14 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
     </button>
   </nav>
 
-  <!-- Mobile expanded menu — starts hidden, JS adds/removes 'flex' -->
-  <div id="mobile-menu" class="hidden sm:hidden flex-col pb-2">
-
+  <!-- Mobile expanded menu — controlled via inline style transitions -->
+  <div
+    id="mobile-menu"
+    class="sm:hidden flex flex-col overflow-hidden transition-all duration-300 ease-out"
+    style="max-height: 0; opacity: 0; pointer-events: none;"
+  >
     <!-- Top row: large photo + name + X -->
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-4 pt-1">
       <div class="w-16 h-16 rounded-[14px] overflow-hidden shrink-0">
         <img src="/images/profile.jpg" alt="Eric Ruelas" class="w-full h-full object-cover block" />
       </div>
@@ -80,7 +84,7 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
     </div>
 
     <!-- Centered buttons -->
-    <div class="flex flex-col items-center gap-3 mt-6">
+    <div class="flex flex-col items-center gap-3 mt-6 pb-2">
       <button
         id="mobile-download-btn"
         data-url={resumeUrl}
@@ -116,8 +120,7 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
   }
 
   function showConfirmation(label: HTMLElement, icon: HTMLElement, check: HTMLElement, defaultText: string) {
-    label.textContent = label === document.getElementById('download-label') || label === document.getElementById('mobile-download-label')
-      ? 'Downloaded!' : 'Copied!';
+    label.textContent = defaultText === 'View Resume' ? 'Downloaded!' : 'Copied!';
     icon.classList.add('hidden');
     check.classList.remove('hidden');
     setTimeout(() => {
@@ -127,18 +130,35 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
     }, 2000);
   }
 
+  const navCompact = document.getElementById('nav-compact') as HTMLElement;
+  const mobileMenu = document.getElementById('mobile-menu') as HTMLElement;
+
   function openMenu() {
-    document.getElementById('nav-compact')!.classList.add('hidden');
-    const menu = document.getElementById('mobile-menu')!;
-    menu.classList.remove('hidden');
-    menu.classList.add('flex');
+    // Fade out compact nav, then hide it
+    navCompact.style.opacity = '0';
+    navCompact.style.pointerEvents = 'none';
+    setTimeout(() => { navCompact.style.display = 'none'; }, 200);
+
+    // Expand menu
+    mobileMenu.style.maxHeight = '280px';
+    mobileMenu.style.opacity = '1';
+    mobileMenu.style.pointerEvents = 'auto';
   }
 
   function closeMenu() {
-    const menu = document.getElementById('mobile-menu')!;
-    menu.classList.add('hidden');
-    menu.classList.remove('flex');
-    document.getElementById('nav-compact')!.classList.remove('hidden');
+    // Collapse menu
+    mobileMenu.style.maxHeight = '0';
+    mobileMenu.style.opacity = '0';
+    mobileMenu.style.pointerEvents = 'none';
+
+    // Restore compact nav after menu starts collapsing
+    navCompact.style.display = '';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        navCompact.style.opacity = '1';
+        navCompact.style.pointerEvents = 'auto';
+      });
+    });
   }
 
   document.getElementById('mobile-menu-btn')?.addEventListener('click', openMenu);
