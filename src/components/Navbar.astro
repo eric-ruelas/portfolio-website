@@ -6,16 +6,14 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
 ---
 
 <header class="px-6 pt-6">
-  <nav class="flex items-center justify-between gap-3 sm:gap-6">
+
+  <!-- Compact nav — hidden on mobile when menu is open -->
+  <nav id="nav-compact" class="flex items-center justify-between gap-3 sm:gap-6">
 
     <!-- Profile photo + name -->
     <div class="flex items-center gap-3 shrink-0">
       <div class="w-10 h-10 rounded-[10px] overflow-hidden shrink-0">
-        <img
-          src="/images/profile.jpg"
-          alt="Eric Ruelas"
-          class="w-full h-full object-cover block"
-        />
+        <img src="/images/profile.jpg" alt="Eric Ruelas" class="w-full h-full object-cover block" />
       </div>
       <div class="flex flex-col leading-tight">
         <span class="text-[#343844] text-[18px] font-normal leading-none">Eric Ruelas</span>
@@ -50,42 +48,59 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
       </button>
     </div>
 
-    <!-- Mobile menu toggle -->
+    <!-- Mobile hamburger -->
     <button
       id="mobile-menu-btn"
       class="sm:hidden flex items-center justify-center w-9 h-9 rounded-full border border-[#3d4c74] text-[#3d4c74] cursor-pointer"
-      aria-label="Toggle menu"
+      aria-label="Open menu"
     >
-      <span id="menu-icon"><Menu size={16} strokeWidth={1.5} /></span>
-      <span id="close-icon" class="hidden"><X size={16} strokeWidth={1.5} /></span>
+      <Menu size={16} strokeWidth={1.5} />
     </button>
   </nav>
 
-  <!-- Mobile dropdown menu — starts hidden, JS adds/removes 'flex' -->
-  <div id="mobile-menu" class="hidden sm:hidden mt-4 flex-col gap-2 pb-2">
-    <button
-      id="mobile-download-btn"
-      data-url={resumeUrl}
-      class="group inline-flex items-center gap-2 pl-2 pr-3 py-2 rounded-[48px] bg-[#3d4c74] text-[#f9f8f6] text-[14px] cursor-pointer w-full"
-    >
-      <span class="bg-[#f9f8f6] w-7 h-7 rounded-full flex items-center justify-center shrink-0">
-        <span id="mobile-download-icon"><Download size={14} color="#3d4c74" strokeWidth={1.5} /></span>
-        <span id="mobile-download-check" class="hidden"><Check size={14} color="#3d4c74" strokeWidth={1.5} /></span>
-      </span>
-      <span id="mobile-download-label">Download Resume</span>
-    </button>
+  <!-- Mobile expanded menu — starts hidden, JS adds/removes 'flex' -->
+  <div id="mobile-menu" class="hidden sm:hidden flex-col pb-2">
 
-    <button
-      id="mobile-copy-btn"
-      data-email={email}
-      class="group inline-flex items-center gap-2 pl-3 pr-2 py-2 rounded-[48px] border border-[#3d4c74] text-[#3d4c74] text-[14px] cursor-pointer w-full"
-    >
-      <span id="mobile-email-label">Copy Email</span>
-      <span class="ml-auto bg-[rgba(61,76,116,0.1)] w-7 h-7 rounded-full flex items-center justify-center shrink-0">
-        <span id="mobile-copy-icon"><Copy size={14} color="#3d4c74" strokeWidth={1.5} /></span>
-        <span id="mobile-check-icon" class="hidden"><Check size={14} color="#3d4c74" strokeWidth={1.5} /></span>
-      </span>
-    </button>
+    <!-- Top row: large photo + name + X -->
+    <div class="flex items-center gap-4">
+      <div class="w-16 h-16 rounded-[14px] overflow-hidden shrink-0">
+        <img src="/images/profile.jpg" alt="Eric Ruelas" class="w-full h-full object-cover block" />
+      </div>
+      <div class="flex flex-col leading-tight">
+        <span class="text-[#343844] text-[20px] font-normal leading-none">Eric Ruelas</span>
+        <span class="text-[#7a7f87] text-[13px] font-normal leading-none mt-1.5">Senior Product Designer</span>
+      </div>
+      <button
+        id="mobile-close-btn"
+        class="ml-auto flex items-center justify-center w-9 h-9 rounded-full border border-[#dadce0] text-[#7a7f87] cursor-pointer shrink-0"
+        aria-label="Close menu"
+      >
+        <X size={16} strokeWidth={1.5} />
+      </button>
+    </div>
+
+    <!-- Centered buttons -->
+    <div class="flex flex-col items-center gap-3 mt-6">
+      <button
+        id="mobile-download-btn"
+        data-url={resumeUrl}
+        class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[48px] bg-[#3d4c74] text-[#f9f8f6] text-[15px] cursor-pointer w-[200px]"
+      >
+        <span id="mobile-download-icon"><Download size={15} color="#f9f8f6" strokeWidth={1.5} /></span>
+        <span id="mobile-download-check" class="hidden"><Check size={15} color="#f9f8f6" strokeWidth={1.5} /></span>
+        <span id="mobile-download-label">View Resume</span>
+      </button>
+
+      <button
+        id="mobile-copy-btn"
+        data-email={email}
+        class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[48px] border border-[#3d4c74] text-[#3d4c74] text-[15px] cursor-pointer w-[200px]"
+      >
+        <span id="mobile-copy-icon"><Copy size={15} color="#3d4c74" strokeWidth={1.5} /></span>
+        <span id="mobile-check-icon" class="hidden"><Check size={15} color="#3d4c74" strokeWidth={1.5} /></span>
+        <span id="mobile-email-label">Copy Email</span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -111,6 +126,23 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
       check.classList.add('hidden');
     }, 2000);
   }
+
+  function openMenu() {
+    document.getElementById('nav-compact')!.classList.add('hidden');
+    const menu = document.getElementById('mobile-menu')!;
+    menu.classList.remove('hidden');
+    menu.classList.add('flex');
+  }
+
+  function closeMenu() {
+    const menu = document.getElementById('mobile-menu')!;
+    menu.classList.add('hidden');
+    menu.classList.remove('flex');
+    document.getElementById('nav-compact')!.classList.remove('hidden');
+  }
+
+  document.getElementById('mobile-menu-btn')?.addEventListener('click', openMenu);
+  document.getElementById('mobile-close-btn')?.addEventListener('click', closeMenu);
 
   // Desktop download
   const downloadBtn = document.getElementById('download-resume-btn') as HTMLElement;
@@ -140,27 +172,6 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
     }
   });
 
-  // Mobile menu toggle
-  const menuBtn = document.getElementById('mobile-menu-btn') as HTMLElement;
-  const mobileMenu = document.getElementById('mobile-menu') as HTMLElement;
-  const menuIcon = document.getElementById('menu-icon') as HTMLElement;
-  const closeIcon = document.getElementById('close-icon') as HTMLElement;
-
-  menuBtn?.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.contains('flex');
-    if (isOpen) {
-      mobileMenu.classList.remove('flex');
-      mobileMenu.classList.add('hidden');
-      menuIcon.classList.remove('hidden');
-      closeIcon.classList.add('hidden');
-    } else {
-      mobileMenu.classList.add('flex');
-      mobileMenu.classList.remove('hidden');
-      menuIcon.classList.add('hidden');
-      closeIcon.classList.remove('hidden');
-    }
-  });
-
   // Mobile download
   const mobileDownloadBtn = document.getElementById('mobile-download-btn') as HTMLElement;
   mobileDownloadBtn?.addEventListener('click', () => {
@@ -169,7 +180,7 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
       document.getElementById('mobile-download-label') as HTMLElement,
       document.getElementById('mobile-download-icon') as HTMLElement,
       document.getElementById('mobile-download-check') as HTMLElement,
-      'Download Resume'
+      'View Resume'
     );
   });
 
