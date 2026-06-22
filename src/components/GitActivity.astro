@@ -52,6 +52,41 @@ const username = 'eric-ruelas';
     4: 'Very active',
   };
 
+  // Custom instant tooltip — avoids the ~500ms native title delay
+  const tooltip = document.createElement('div');
+  Object.assign(tooltip.style, {
+    position: 'fixed',
+    background: '#343844',
+    color: '#fff',
+    padding: '4px 10px',
+    borderRadius: '6px',
+    fontSize: '12px',
+    lineHeight: '1.5',
+    pointerEvents: 'none',
+    opacity: '0',
+    transition: 'opacity 0.08s ease',
+    whiteSpace: 'nowrap',
+    zIndex: '50',
+  });
+  document.body.appendChild(tooltip);
+
+  function showTooltip(e: MouseEvent, text: string) {
+    tooltip.textContent = text;
+    tooltip.style.opacity = '1';
+    positionTooltip(e);
+  }
+
+  function positionTooltip(e: MouseEvent) {
+    const x = e.clientX;
+    const y = e.clientY;
+    tooltip.style.left = `${x - tooltip.offsetWidth / 2}px`;
+    tooltip.style.top  = `${y - 36}px`;
+  }
+
+  function hideTooltip() {
+    tooltip.style.opacity = '0';
+  }
+
   async function loadActivity() {
     try {
       const res = await fetch(
@@ -69,10 +104,19 @@ const username = 'eric-ruelas';
         <button
           class="aspect-square w-full rounded-[3px] transition-transform duration-150 hover:scale-150 focus-visible:scale-150 focus-visible:outline-none"
           style="background-color: ${colors[cell.level]};"
-          title="${cell.date} — ${cell.count} contribution${cell.count !== 1 ? 's' : ''}"
+          data-tip="${cell.date} · ${cell.count} contribution${cell.count !== 1 ? 's' : ''}"
           aria-label="${cell.date}: ${labels[cell.level]}"
         ></button>
       `).join('');
+
+      grid.addEventListener('mouseover', (e) => {
+        const btn = (e.target as HTMLElement).closest('[data-tip]') as HTMLElement | null;
+        if (btn) showTooltip(e as MouseEvent, btn.dataset.tip ?? '');
+      });
+      grid.addEventListener('mousemove', (e) => {
+        if (tooltip.style.opacity === '1') positionTooltip(e as MouseEvent);
+      });
+      grid.addEventListener('mouseout', hideTooltip);
 
       const total = recent.reduce((sum: number, c: { count: number }) => sum + c.count, 0);
       const totalEl = document.getElementById('git-total');
