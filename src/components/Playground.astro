@@ -1,0 +1,45 @@
+---
+import { Blocks } from '@lucide/astro';
+
+const projects = [
+  {
+    name: 'Notely',
+    description: 'FigJam-style floating sticky notes for macOS',
+    href: 'https://github.com/eric-ruelas/notely',
+    icon: '🗒️',
+  },
+];
+---
+
+<section class="px-6 py-8 sm:py-12">
+  <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-8">
+    <span class="inline-flex items-center justify-center w-9 h-9 rounded-[6px] bg-[rgba(61,76,116,0.1)]">
+      <Blocks size={18} color="#3d4c74" strokeWidth={1.5} />
+    </span>
+    <h2 class="text-[28px] text-[#343844] font-normal leading-[1.2]">Playground</h2>
+  </div>
+
+  <div class="flex flex-col gap-3">
+    {projects.map((project) => (
+      <a
+        href={project.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group flex items-center gap-4 p-4 rounded-xl border border-[#dadce0] hover:border-[#3d4c74]/30 hover:bg-[rgba(61,76,116,0.03)] transition-all duration-150"
+      >
+        <div class="w-12 h-12 rounded-[10px] bg-[rgba(61,76,116,0.08)] flex items-center justify-center text-[22px] shrink-0">
+          {project.icon}
+        </div>
+        <div class="flex flex-col gap-0.5 min-w-0">
+          <span class="flex items-center gap-1.5 text-[16px] text-[#343844] font-medium leading-none">
+            {project.name}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7a7f87" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-[#3d4c74] transition-colors shrink-0">
+              <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+            </svg>
+          </span>
+          <span class="text-[14px] text-[#7a7f87] leading-[1.5]">{project.description}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
