@@ -1,45 +1,6 @@
 ---
 import { GitCommitHorizontal } from '@lucide/astro';
-
 const username = 'eric-ruelas';
-
-type Contribution = { date: string; count: number; level: 0 | 1 | 2 | 3 | 4 };
-
-let contributions: Contribution[] = [];
-
-try {
-  const res = await fetch(
-    `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
-    { signal: AbortSignal.timeout(5000) }
-  );
-  const data = await res.json();
-  contributions = data.contributions ?? [];
-} catch {
-  // API unavailable at build time — grid will be empty
-}
-
-// Last 30 days
-const recent = contributions.slice(-30);
-
-const colors: Record<number, string> = {
-  [-1]: 'transparent',
-  [0]:  '#e2e4e9',
-  [1]:  'rgba(61,76,116,0.22)',
-  [2]:  'rgba(61,76,116,0.44)',
-  [3]:  'rgba(61,76,116,0.70)',
-  [4]:  '#3d4c74',
-};
-
-const labels: Record<number, string> = {
-  [-1]: '',
-  [0]:  'No activity',
-  [1]:  'Light activity',
-  [2]:  'Moderate activity',
-  [3]:  'Active',
-  [4]:  'Very active',
-};
-
-const totalContributions = recent.reduce((sum, c) => sum + c.count, 0);
 ---
 
 <section class="px-6 py-8 sm:py-12">
@@ -52,21 +13,12 @@ const totalContributions = recent.reduce((sum, c) => sum + c.count, 0);
 
   <p class="text-[11px] font-semibold tracking-widest uppercase text-[#7a7f87] mb-3">Last 30 days</p>
 
-  <!-- 30-day flat grid -->
-  {recent.length === 0 ? (
-    <p class="text-[13px] text-[#7a7f87] py-4">No public activity to display.</p>
-  ) : (
-    <div class="grid grid-cols-[repeat(30,minmax(0,1fr))] gap-1 w-full">
-      {recent.map((cell) => (
-        <button
-          class="aspect-square w-full rounded-[3px] transition-transform duration-150 hover:scale-150 focus-visible:scale-150 focus-visible:outline-none"
-          style={`background-color: ${colors[cell.level]};`}
-          title={`${cell.date} — ${cell.count} contribution${cell.count !== 1 ? 's' : ''}`}
-          aria-label={`${cell.date}: ${labels[cell.level]}`}
-        />
-      ))}
-    </div>
-  )}
+  <!-- Grid populated client-side so data is always fresh -->
+  <div id="git-grid" class="grid grid-cols-[repeat(30,minmax(0,1fr))] gap-1 w-full">
+    {Array.from({ length: 30 }).map(() => (
+      <div class="aspect-square w-full rounded-[3px] bg-[#e2e4e9] animate-pulse" />
+    ))}
+  </div>
 
   <div class="mt-3 flex items-center justify-between">
     <a
@@ -77,8 +29,61 @@ const totalContributions = recent.reduce((sum, c) => sum + c.count, 0);
     >
       github.com/{username}
     </a>
-    {totalContributions > 0 && (
-      <span class="text-[13px] text-[#7a7f87]">{totalContributions} contributions in the last 30 days</span>
-    )}
+    <span id="git-total" class="text-[13px] text-[#7a7f87] hidden"></span>
   </div>
 </section>
+
+<script>
+  const username = 'eric-ruelas';
+
+  const colors: Record<number, string> = {
+    0: '#e2e4e9',
+    1: 'rgba(61,76,116,0.22)',
+    2: 'rgba(61,76,116,0.44)',
+    3: 'rgba(61,76,116,0.70)',
+    4: '#3d4c74',
+  };
+
+  const labels: Record<number, string> = {
+    0: 'No activity',
+    1: 'Light activity',
+    2: 'Moderate activity',
+    3: 'Active',
+    4: 'Very active',
+  };
+
+  async function loadActivity() {
+    try {
+      const res = await fetch(
+        `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
+        { signal: AbortSignal.timeout(6000) }
+      );
+      const data = await res.json();
+      const contributions: { date: string; count: number; level: 0|1|2|3|4 }[] = data.contributions ?? [];
+      const recent = contributions.slice(-30);
+
+      const grid = document.getElementById('git-grid');
+      if (!grid || recent.length === 0) return;
+
+      grid.innerHTML = recent.map((cell) => `
+        <button
+          class="aspect-square w-full rounded-[3px] transition-transform duration-150 hover:scale-150 focus-visible:scale-150 focus-visible:outline-none"
+          style="background-color: ${colors[cell.level]};"
+          title="${cell.date} — ${cell.count} contribution${cell.count !== 1 ? 's' : ''}"
+          aria-label="${cell.date}: ${labels[cell.level]}"
+        ></button>
+      `).join('');
+
+      const total = recent.reduce((sum: number, c: { count: number }) => sum + c.count, 0);
+      const totalEl = document.getElementById('git-total');
+      if (total > 0 && totalEl) {
+        totalEl.textContent = `${total} contributions in the last 30 days`;
+        totalEl.classList.remove('hidden');
+      }
+    } catch {
+      // API unavailable — leave skeleton as-is
+    }
+  }
+
+  loadActivity();
+</script>
