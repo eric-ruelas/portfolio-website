@@ -22,3 +22,11 @@ body {
   font-family: "Geist Mono", monospace;
   -webkit-font-smoothing: antialiased;
 }
+
+button, a, [role="button"] {
+  cursor: pointer;
+}
+
+button *, a *, [role="button"] * {
+  cursor: inherit;
+}
