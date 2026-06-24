@@ -37,12 +37,8 @@ const jobs = [
     <script>
       const cvBtn = document.getElementById('download-cv-btn') as HTMLElement;
       cvBtn?.addEventListener('click', () => {
-        const a = document.createElement('a');
-        a.href = cvBtn.dataset.url ?? '';
-        a.download = '';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        const url = cvBtn.dataset.url ?? '';
+        if (url) window.open(url, '_blank', 'noopener,noreferrer');
       });
     </script>
   </div>
