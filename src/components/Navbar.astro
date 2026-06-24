@@ -148,16 +148,11 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
 <script>
   function triggerDownload(url: string) {
     if (!url) return;
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = '';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    window.open(url, '_blank', 'noopener,noreferrer');
   }
 
   function showConfirmation(label: HTMLElement, icon: HTMLElement, check: HTMLElement, defaultText: string) {
-    label.textContent = defaultText === 'View Resume' ? 'Downloaded!' : 'Copied!';
+    label.textContent = defaultText === 'View Resume' ? 'Opened!' : 'Copied!';
     icon.classList.add('hidden');
     check.classList.remove('hidden');
     setTimeout(() => {
