@@ -152,7 +152,7 @@ const email = import.meta.env.PUBLIC_EMAIL ?? '';
   }
 
   function showConfirmation(label: HTMLElement, icon: HTMLElement, check: HTMLElement, defaultText: string) {
-    label.textContent = defaultText === 'View Resume' ? 'Opened!' : 'Copied!';
+    label.textContent = defaultText === 'Download Resume' ? 'Downloaded!' : defaultText === 'View Resume' ? 'Opened!' : 'Copied!';
     icon.classList.add('hidden');
     check.classList.remove('hidden');
     setTimeout(() => {
