@@ -42,6 +42,14 @@ const jobs = [
         const url = cvBtn.dataset.url ?? '';
         if (url) window.open(url, '_blank', 'noopener,noreferrer');
       });
+
+      document.querySelectorAll<HTMLAnchorElement>('[data-bg-link]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const w = window.open(link.href, '_blank', 'noopener,noreferrer');
+          if (w) { w.blur(); window.focus(); }
+        });
+      });
     </script>
   </div>
 
@@ -49,7 +57,7 @@ const jobs = [
     {jobs.map((job) => (
       <div class="py-4 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4">
         {job.href ? (
-          <a href={job.href} target="_blank" rel="noopener noreferrer" class="text-[22px] text-[#343844] font-normal leading-[1.2] shrink-0 hover:text-[#3d4c74] transition-colors duration-150">{job.company}</a>
+          <a href={job.href} data-bg-link class="text-[22px] text-[#343844] font-normal leading-[1.2] shrink-0 hover:text-[#3d4c74] transition-colors duration-150">{job.company}</a>
         ) : (
           <span class="text-[22px] text-[#343844] font-normal leading-[1.2] shrink-0">{job.company}</span>
         )}
