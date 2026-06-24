@@ -7,11 +7,13 @@ const jobs = [
   {
     title: 'Senior Product Designer',
     company: 'CareMessage',
+    href: 'https://www.caremessage.org/',
     years: '2022–Present',
   },
   {
     title: 'Product Designer',
     company: 'Plexuss',
+    href: null,
     years: '2019–2022',
   },
 ];
@@ -46,7 +48,11 @@ const jobs = [
   <div class="flex flex-col gap-2">
     {jobs.map((job) => (
       <div class="py-4 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4">
-        <span class="text-[22px] text-[#343844] font-normal leading-[1.2] shrink-0">{job.company}</span>
+        {job.href ? (
+          <a href={job.href} target="_blank" rel="noopener noreferrer" class="text-[22px] text-[#343844] font-normal leading-[1.2] shrink-0 hover:text-[#3d4c74] transition-colors duration-150">{job.company}</a>
+        ) : (
+          <span class="text-[22px] text-[#343844] font-normal leading-[1.2] shrink-0">{job.company}</span>
+        )}
         <span class="hidden sm:block flex-1 border-b border-dotted border-[#dadce0] mb-[0.2em]"></span>
         <div class="flex items-center gap-2 flex-wrap">
           <span class="inline-flex items-center px-3 py-1.5 rounded-lg border border-[#3d4c74]/30 bg-[rgba(61,76,116,0.08)] text-[#3d4c74] text-[13px]">
