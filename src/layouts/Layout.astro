@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import FloatingNav from '../components/FloatingNav.astro';
 
 interface Props {
   title?: string;
@@ -90,6 +91,7 @@ const ogImage = new URL(image, Astro.site);
     <div class="max-w-[700px] mx-auto">
       <slot />
     </div>
+    <FloatingNav />
     <script>
       const observer = new IntersectionObserver(
         (entries) => {
