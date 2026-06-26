@@ -22,8 +22,6 @@ const ogImage = new URL(image, Astro.site);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="generator" content={Astro.generator} />
-
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/images/avatar.png" />
@@ -41,6 +39,8 @@ const ogImage = new URL(image, Astro.site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Eric Ruelas — Senior Product Designer" />
     <meta property="og:site_name" content="Eric Ruelas" />
     <meta property="og:locale" content="en_US" />
@@ -68,7 +68,8 @@ const ogImage = new URL(image, Astro.site);
         "addressCountry": "US"
       },
       "sameAs": [
-        "https://github.com/eric-ruelas"
+        "https://github.com/eric-ruelas",
+        "https://www.linkedin.com/in/ericruelas"
       ],
       "worksFor": {
         "@type": "Organization",

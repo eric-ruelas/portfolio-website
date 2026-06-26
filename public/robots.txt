@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ericruelas.com/sitemap-index.xml
