@@ -11,7 +11,7 @@ const skills = [
   { name: 'Prototyping & Testing', detail: 'Clickable prototypes to validate ideas early' },
 ];
 
-const tools = ['Figma', 'Figjam', 'Webflow', 'Notion', 'Photoshop'];
+const tools = ['Figma', 'V0 by Vercel', 'Cursor', 'Maze', 'Notion', 'FigJam', 'Miro', 'Lovable', 'Framer'];
 ---
 
 <section class="px-6 py-8 sm:py-12">
@@ -34,6 +34,15 @@ const tools = ['Figma', 'Figjam', 'Webflow', 'Notion', 'Photoshop'];
         <span class="hidden sm:block flex-1 border-b border-dotted border-[#dadce0] mb-[0.2em]"></span>
         <span class="text-[15px] text-[#7a7f87] sm:shrink-0">{skill.detail}</span>
       </div>
+    ))}
+  </div>
+
+  <p class="text-[11px] font-semibold tracking-widest uppercase text-[#7a7f87] mb-4">Tooling</p>
+  <div class="flex flex-wrap gap-2">
+    {tools.map((tool) => (
+      <span class="inline-flex items-center px-3 py-1.5 rounded-lg border border-[#3d4c74]/30 bg-[rgba(61,76,116,0.08)] text-[#3d4c74] text-[13px]">
+        {tool}
+      </span>
     ))}
   </div>
 
