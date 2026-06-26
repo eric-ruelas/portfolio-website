@@ -6,10 +6,43 @@ const projects = [
     name: 'Notely',
     description: 'FigJam-style floating sticky notes for macOS',
     href: 'https://github.com/eric-ruelas/notely',
-    icon: '🗒️',
   },
 ];
 ---
+
+<style>
+  .note {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .note-1 {
+    background: #fef9c3;
+    transform: rotate(-10deg) translate(-6px, 4px);
+    z-index: 1;
+  }
+  .note-2 {
+    background: #dbeafe;
+    transform: rotate(5deg) translate(5px, 3px);
+    z-index: 2;
+  }
+  .note-3 {
+    background: #ede9fe;
+    transform: rotate(-2deg) translate(0px, -2px);
+    z-index: 3;
+  }
+  .group:hover .note-1 {
+    transform: rotate(-18deg) translate(-16px, -14px);
+  }
+  .group:hover .note-2 {
+    transform: rotate(8deg) translate(14px, -16px);
+  }
+  .group:hover .note-3 {
+    transform: rotate(-4deg) translate(-2px, -18px);
+  }
+</style>
 
 <section class="px-6 py-8 sm:py-12">
   <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-8">
@@ -27,8 +60,10 @@ const projects = [
         rel="noopener noreferrer"
         class="group flex items-center gap-4 p-4 rounded-xl border border-[#dadce0] hover:border-[#3d4c74]/30 hover:bg-[rgba(61,76,116,0.03)] transition-all duration-150"
       >
-        <div class="w-12 h-12 rounded-[10px] bg-[rgba(61,76,116,0.08)] flex items-center justify-center text-[22px] shrink-0">
-          {project.icon}
+        <div class="w-12 h-12 rounded-[10px] bg-[rgba(61,76,116,0.08)] flex items-center justify-center shrink-0 relative">
+          <div class="note note-1"></div>
+          <div class="note note-2"></div>
+          <div class="note note-3"></div>
         </div>
         <div class="flex flex-col gap-0.5 min-w-0">
           <span class="flex items-center gap-1.5 text-[16px] text-[#343844] font-medium leading-none">
