@@ -4,12 +4,17 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
 }
 
 const {
   title = 'Eric Ruelas — Senior Product Designer',
   description = 'Senior Product Designer in the San Francisco Bay Area, focused on healthcare tools for underserved communities.',
+  image = '/images/profile.jpg',
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
 ---
 
 <!doctype html>
@@ -17,16 +22,67 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/jpeg" href="/images/profile.jpg" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="/images/profile.jpg" />
+
+    <!-- Primary SEO -->
+    <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content="Eric Ruelas" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Eric Ruelas — Senior Product Designer" />
+    <meta property="og:site_name" content="Eric Ruelas" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Eric Ruelas — Senior Product Designer" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Eric Ruelas",
+      "url": "https://ericruelas.com",
+      "image": ogImage.toString(),
+      "jobTitle": "Senior Product Designer",
+      "description": description,
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "California",
+        "addressLocality": "San Francisco Bay Area",
+        "addressCountry": "US"
+      },
+      "sameAs": [
+        "https://github.com/eric-ruelas"
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "CareMessage",
+        "url": "https://www.caremessage.org/"
+      }
+    })} />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <title>{title}</title>
   </head>
   <body>
     <div class="max-w-[700px] mx-auto">
