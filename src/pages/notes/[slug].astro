@@ -74,7 +74,29 @@ function formatDate(date: Date) {
   }
 </style>
 
-<Layout title={`${note.data.title} — Eric Ruelas`} description={note.data.description}>
+<Layout
+  title={`${note.data.title} — Eric Ruelas`}
+  description={note.data.description}
+  publishedTime={note.data.date.toISOString()}
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": note.data.title,
+    "description": note.data.description,
+    "datePublished": note.data.date.toISOString(),
+    "author": {
+      "@type": "Person",
+      "name": "Eric Ruelas",
+      "url": "https://ericruelas.com"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Eric Ruelas",
+      "url": "https://ericruelas.com"
+    },
+    "url": `https://ericruelas.com/notes/${note.id}`
+  })} slot="head" />
   <Navbar />
   <main class="px-6 py-8 sm:py-12">
 
