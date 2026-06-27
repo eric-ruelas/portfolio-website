@@ -3,6 +3,7 @@ title: "Designers Aren't Cooked (Yet): Rebuilding My Portfolio with Claude Code"
 description: "What I learned using AI to finally ship my own portfolio — the part designers always put last."
 date: 2026-06-26
 draft: false
+image: "/images/portfolio-build.png"
 ---
 
 For the last couple of months I've been exploring AI tools to improve my workflow, and only in these last two have I really gotten into the weeds of it.

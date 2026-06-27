@@ -8,6 +8,7 @@ const notes = defineCollection({
     description: z.string(),
     date: z.coerce.date(),
     draft: z.boolean().optional().default(false),
+    image: z.string().optional(),
   }),
 });
 

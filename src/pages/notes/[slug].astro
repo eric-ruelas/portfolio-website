@@ -83,6 +83,7 @@ function formatDate(date: Date) {
   title={`${note.data.title} — Eric Ruelas`}
   description={note.data.description}
   publishedTime={note.data.date.toISOString()}
+  image={note.data.image}
 >
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
