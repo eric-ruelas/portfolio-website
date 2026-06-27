@@ -12,14 +12,23 @@ const skills = [
 ];
 
 const tools = [
-  // AI
-  'Claude Code', 'Cursor', 'V0 by Vercel',
-  // Design
-  'Figma', 'FigJam', 'Framer',
-  // Build & ship
-  'Webflow', 'Vercel', 'Ship Studio',
+  { name: 'Claude Code', category: 'AI' },
+  { name: 'Cursor',      category: 'AI' },
+  { name: 'V0 by Vercel', category: 'AI' },
+  { name: 'Figma',       category: 'Design' },
+  { name: 'FigJam',      category: 'Design' },
+  { name: 'Framer',      category: 'Design' },
+  { name: 'Webflow',     category: 'Build & Ship' },
+  { name: 'Vercel',      category: 'Build & Ship' },
+  { name: 'Ship Studio', category: 'Build & Ship' },
 ];
 ---
+
+<style>
+  .tool-badge:hover .tool-tip {
+    opacity: 1;
+  }
+</style>
 
 <section class="px-6 py-8 sm:py-12" data-animate>
   <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-6">
@@ -47,8 +56,14 @@ const tools = [
   <p class="text-[11px] font-semibold tracking-widest uppercase text-[#7a7f87] mb-4">Tooling</p>
   <div class="flex flex-wrap gap-2">
     {tools.map((tool) => (
-      <span class="inline-flex items-center px-3 py-1.5 rounded-lg border border-[#3d4c74]/30 bg-[rgba(61,76,116,0.08)] text-[#3d4c74] text-[13px]">
-        {tool}
+      <span
+        class="tool-badge relative inline-flex items-center px-3 py-1.5 rounded-lg border border-[#3d4c74]/30 bg-[rgba(61,76,116,0.08)] text-[#3d4c74] text-[13px] cursor-default"
+        data-category={tool.category}
+      >
+        {tool.name}
+        <span class="tool-tip absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#343844] text-white text-[11px] px-2.5 py-1 rounded-md opacity-0 pointer-events-none transition-opacity duration-150">
+          {tool.category}
+        </span>
       </span>
     ))}
   </div>
