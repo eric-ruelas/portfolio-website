@@ -13,6 +13,8 @@ One of the most ignored parts of being a designer is your own portfolio. I can e
 
 So I wanted to see if I could use Claude Code to update mine, and learn a few things along the way.
 
+![My workspace while building this portfolio](/images/portfolio-build.png)
+
 It all starts with a project folder, somewhere to keep the assets you need: images, docs, outlines of the site. This assumes you already have Claude Code installed. At work, I was lucky to have a great engineer on my team who helped me set up Git and explained how it works. Essentially, Git stores everything in that folder, all your code and assets. It's your source of truth. Once you've got a project folder, Claude Code, and a Git client installed, you can really begin.
 
 To be clear: I love Figma and I'm not leaving it. But I didn't start this in Figma, and that was the point. If I had, I probably never would have left it, and I'd still be procrastinating. Luckily my old portfolio lived in Framer, so I just screenshotted the entire thing and used that as my reference.
