@@ -24,7 +24,7 @@ const isNotes = pathname.startsWith('/notes');
   }
 </style>
 
-<div id="floating-nav" aria-label="Site navigation">
+<div id="floating-nav" data-always-show={String(!isHome)} aria-label="Site navigation">
   <div class="flex items-center gap-1 bg-white/90 backdrop-blur-md border border-[#dadce0] rounded-full px-2 py-2 shadow-[0_4px_24px_rgba(52,56,68,0.10)]">
     <a
       href="/"
@@ -53,9 +53,10 @@ const isNotes = pathname.startsWith('/notes');
 
 <script>
   const nav = document.getElementById('floating-nav') as HTMLElement;
+  const alwaysShow = nav.dataset.alwaysShow === 'true';
 
   function update() {
-    if (window.scrollY > 150) {
+    if (alwaysShow || window.scrollY > 150) {
       nav.classList.add('is-visible');
     } else {
       nav.classList.remove('is-visible');
