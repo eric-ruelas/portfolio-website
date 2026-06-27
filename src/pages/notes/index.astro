@@ -29,11 +29,11 @@ function formatDate(date: Date) {
       Thoughts on product design, systems thinking, and building things.
     </p>
 
-    <div class="flex flex-col divide-y divide-[#dadce0]">
+    <div class="flex flex-col gap-3">
       {allNotes.map((note) => (
         <a
           href={`/notes/${note.id}`}
-          class="group py-6 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8 hover:opacity-70 transition-opacity duration-150"
+          class="group p-5 rounded-xl border border-[#dadce0] hover:border-[#3d4c74]/30 hover:bg-[rgba(61,76,116,0.03)] transition-all duration-150 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8"
         >
           <span class="text-[13px] text-[#7a7f87] shrink-0 tabular-nums">
             {formatDate(note.data.date)}
