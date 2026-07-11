@@ -24,6 +24,7 @@ const links = [
           href={link.href}
           target={link.label !== 'Email' ? '_blank' : undefined}
           rel={link.label !== 'Email' ? 'noopener noreferrer' : undefined}
+          data-track-contact={link.label.toLowerCase()}
           class="group flex flex-col sm:flex-row sm:items-baseline py-3 sm:py-4 gap-0.5 sm:gap-0 hover:opacity-70 transition-opacity duration-150"
         >
           <span class="text-[13px] sm:text-[15px] text-white/50 shrink-0">{link.label}</span>
@@ -36,3 +37,14 @@ const links = [
     <p class="text-[11px] text-white/30 font-mono mt-8">© 2026 - Eric Ruelas</p>
   </div>
 </footer>
+
+<script>
+  document.querySelectorAll('[data-track-contact]').forEach((el) => {
+    el.addEventListener('click', () => {
+      window.posthog?.capture('contact_clicked', {
+        method: el.getAttribute('data-track-contact'),
+        location: 'footer',
+      });
+    });
+  });
+</script>
