@@ -1,12 +1,12 @@
 ---
-title: "Designers Aren't Cooked (Yet): Rebuilding My Portfolio with Claude Code"
+title: "Rebuilding My Portfolio with Claude Code"
 description: "What I learned using AI to finally ship my own portfolio — the part designers always put last."
 date: 2026-06-26
 draft: false
 image: "/images/portfolio-build.png"
 ---
 
-For the last couple of months I've been exploring AI tools to improve my workflow, and only in these last two have I really gotten into the weeds of it.
+For the last couple of months I've been exploring AI tools to improve my workflow, and only recently have I gotten into the weeds of it.
 
 I've improved how I work both at my 9–5 and on my own projects. It hasn't replaced the creative part. It's improved the process around it. Building prototypes for usability tests, synthesizing research, even coming up with new ways to display information in a dashboard that I wouldn't have thought of, all without wasting hours wiring static designs together just to get something clickable.
 
