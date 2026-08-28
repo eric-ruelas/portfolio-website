@@ -1,5 +1,5 @@
 ---
-import { Mail } from '@lucide/astro';
+import DotGridIcon from './DotGridIcon.astro';
 const email = import.meta.env.PUBLIC_EMAIL ?? '';
 
 const links = [
@@ -12,9 +12,7 @@ const links = [
 <footer class="px-6 pt-4 pb-10">
   <div class="bg-[#3d4c74] rounded-2xl px-5 sm:px-8 py-6 sm:py-8">
     <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-6">
-      <span class="inline-flex items-center justify-center w-9 h-9 rounded-[6px] bg-white/10">
-        <Mail size={18} color="white" strokeWidth={1.5} />
-      </span>
+      <DotGridIcon seed="contact" color="white" />
       <h2 class="text-[28px] text-white font-normal leading-[1.2]">Contact</h2>
     </div>
 

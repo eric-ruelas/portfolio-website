@@ -1,0 +1,76 @@
+---
+interface Props {
+  seed: string;
+  size?: number;
+  color?: string;
+}
+
+const { seed, size = 22, color = '#3d4c74' } = Astro.props;
+const COLS = 4;
+
+function hash(str: string, salt: number) {
+  let h = salt;
+  for (let i = 0; i < str.length; i++) {
+    h = (Math.imul(h, 31) + str.charCodeAt(i)) >>> 0;
+  }
+  return h;
+}
+
+const dots = Array.from({ length: COLS * COLS }).map((_, i) => {
+  const h = hash(seed, i * 97 + 13);
+  return {
+    on: h % 100 < 45,
+    delay: -((h % 40) / 10),
+    duration: 2.6 + ((h >> 3) % 20) / 10,
+  };
+});
+---
+
+<span
+  class="dot-grid-icon shrink-0"
+  style={`width:${size}px;height:${size}px;grid-template-columns:repeat(${COLS},1fr);grid-template-rows:repeat(${COLS},1fr);`}
+  aria-hidden="true"
+>
+  {dots.map((d) => (
+    <span
+      class:list={['dot-cell', d.on ? 'dot-on' : 'dot-off']}
+      style={`background-color:${color};animation-delay:${d.delay}s;animation-duration:${d.duration}s;`}
+    />
+  ))}
+</span>
+
+<style>
+  .dot-grid-icon {
+    display: inline-grid;
+    place-items: center;
+  }
+  .dot-cell {
+    width: 2.5px;
+    height: 2.5px;
+    border-radius: 50%;
+    justify-self: center;
+    align-self: center;
+  }
+  .dot-off {
+    opacity: 0.1;
+  }
+  .dot-on {
+    animation-name: dot-twinkle;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+  }
+  @keyframes dot-twinkle {
+    0%, 100% {
+      opacity: 0.9;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dot-on {
+      animation: none;
+      opacity: 0.7;
+    }
+  }
+</style>
