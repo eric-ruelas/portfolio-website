@@ -4,6 +4,8 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import { Pencil } from '@lucide/astro';
 
+return Astro.redirect('/', 302);
+
 const allNotes = await getCollection('notes', ({ data }) => !data.draft);
 allNotes.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 

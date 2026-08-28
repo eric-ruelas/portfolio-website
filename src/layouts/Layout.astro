@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import FloatingNav from '../components/FloatingNav.astro';
 import LeaveBanner from '../components/LeaveBanner.astro';
 
 interface Props {
@@ -112,7 +111,6 @@ const ogImage = new URL(image, Astro.site);
     <div class="max-w-[700px] mx-auto">
       <slot />
     </div>
-    <FloatingNav />
     <script>
       const observer = new IntersectionObserver(
         (entries) => {

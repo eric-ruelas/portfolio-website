@@ -1,7 +1,6 @@
 ---
 const pathname = Astro.url.pathname;
 const isHome = pathname === '/';
-const isNotes = pathname.startsWith('/notes');
 ---
 
 <style>
@@ -37,17 +36,6 @@ const isNotes = pathname.startsWith('/notes');
       ]}
     >
       Home
-    </a>
-    <a
-      href="/notes"
-      class:list={[
-        'px-4 py-1.5 rounded-full text-[14px] transition-colors duration-150',
-        isNotes
-          ? 'bg-[rgba(61,76,116,0.1)] text-[#3d4c74] font-medium'
-          : 'text-[#7a7f87] hover:text-[#343844] hover:bg-[rgba(61,76,116,0.06)]'
-      ]}
-    >
-      Notes
     </a>
   </div>
 </div>
