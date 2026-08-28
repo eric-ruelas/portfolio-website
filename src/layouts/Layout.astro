@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import FloatingNav from '../components/FloatingNav.astro';
+import LeaveBanner from '../components/LeaveBanner.astro';
 
 interface Props {
   title?: string;
@@ -107,6 +108,7 @@ const ogImage = new URL(image, Astro.site);
     />
   </head>
   <body>
+    <LeaveBanner />
     <div class="max-w-[700px] mx-auto">
       <slot />
     </div>
