@@ -10,8 +10,8 @@ interface Props {
 }
 
 const {
-  title = 'Eric Ruelas — Senior Product Designer',
-  description = 'Senior Product Designer in the San Francisco Bay Area, focused on healthcare tools for underserved communities.',
+  title = 'Eric Ruelas, Senior Product Designer',
+  description = 'Eric Ruelas is a Senior Product Designer in the San Francisco Bay Area, designing accessible software for healthcare tools serving underserved communities.',
   image = '/ericuelas.png',
   publishedTime,
 } = Astro.props;
@@ -63,7 +63,7 @@ const ogImage = new URL(image, Astro.site);
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Eric Ruelas",
-      "url": "https://ericruelas.com",
+      "url": "https://www.ericruelas.com",
       "image": ogImage.toString(),
       "jobTitle": "Senior Product Designer",
       "description": description,
@@ -74,8 +74,8 @@ const ogImage = new URL(image, Astro.site);
         "addressCountry": "US"
       },
       "sameAs": [
-        "https://github.com/eric-ruelas",
-        "https://www.linkedin.com/in/ericruelas"
+        "https://www.linkedin.com/in/ericruelas",
+        "https://github.com/eric-ruelas"
       ],
       "worksFor": {
         "@type": "Organization",

@@ -8,5 +8,12 @@
       "source": "/ingest/(.*)",
       "destination": "https://us.i.posthog.com/$1"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/notes/the-design-system-i-proposed-a-year-too-early",
+      "destination": "/",
+      "permanent": true
+    }
   ]
 }

@@ -4,8 +4,12 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://ericruelas.com',
-  integrations: [sitemap()],
+  site: 'https://www.ericruelas.com',
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/notes'),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()]
   }
