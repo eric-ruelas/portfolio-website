@@ -3,9 +3,10 @@ import DotGridIcon from './DotGridIcon.astro';
 const email = import.meta.env.PUBLIC_EMAIL ?? '';
 
 const links = [
-  { label: 'LinkedIn', handle: 'in/ericruelas', href: 'https://www.linkedin.com/in/ericruelas' },
-  { label: 'GitHub', handle: '/eric-ruelas', href: 'https://github.com/eric-ruelas' },
-  { label: 'Email', handle: email, href: `mailto:${email}` },
+  { label: 'LinkedIn', handle: 'in/ericruelas', href: 'https://www.linkedin.com/in/ericruelas', rel: 'noopener noreferrer' },
+  { label: 'GitHub', handle: '/eric-ruelas', href: 'https://github.com/eric-ruelas', rel: 'noopener noreferrer' },
+  { label: 'Freelance work', handle: 'ericruelas.design', href: 'https://ericruelas.design', rel: 'noopener' },
+  { label: 'Email', handle: email, href: `mailto:${email}`, rel: undefined },
 ];
 ---
 
@@ -21,7 +22,7 @@ const links = [
         <a
           href={link.href}
           target={link.label !== 'Email' ? '_blank' : undefined}
-          rel={link.label !== 'Email' ? 'noopener noreferrer' : undefined}
+          rel={link.rel}
           data-track-contact={link.label.toLowerCase()}
           class="group flex flex-col sm:flex-row sm:items-baseline py-3 sm:py-4 gap-0.5 sm:gap-0 hover:opacity-70 transition-opacity duration-150"
         >
