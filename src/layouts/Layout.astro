@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import LeaveBanner from '../components/LeaveBanner.astro';
 
 interface Props {
   title?: string;
@@ -111,7 +110,6 @@ const ogImage = new URL(image, Astro.site);
     </script>
   </head>
   <body>
-    <LeaveBanner />
     <div class="max-w-[700px] mx-auto">
       <slot />
     </div>
