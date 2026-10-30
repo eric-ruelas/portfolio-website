@@ -27,7 +27,7 @@ function formatDate(date: Date) {
       <h1 class="text-[28px] text-[#343844] font-normal leading-[1.2]">Notes</h1>
     </div>
 
-    <p class="text-[15px] text-[#7a7f87] leading-[1.6] mb-10">
+    <p class="text-[15px] text-[#5c6168] leading-[1.6] mb-10">
       Thoughts on product design, systems thinking, and building things.
     </p>
 
@@ -37,14 +37,14 @@ function formatDate(date: Date) {
           href={`/notes/${note.id}`}
           class="group p-5 rounded-xl border border-[#dadce0] hover:border-[#3d4c74]/30 hover:bg-[rgba(61,76,116,0.03)] transition-all duration-150 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8"
         >
-          <span class="text-[13px] text-[#7a7f87] shrink-0 tabular-nums">
+          <span class="text-[13px] text-[#5c6168] shrink-0 tabular-nums">
             {formatDate(note.data.date)}
           </span>
           <div class="flex flex-col gap-1">
             <span class="text-[16px] text-[#343844] font-medium leading-snug group-hover:text-[#3d4c74] transition-colors duration-150">
               {note.data.title}
             </span>
-            <span class="text-[14px] text-[#7a7f87] leading-[1.5]">
+            <span class="text-[14px] text-[#5c6168] leading-[1.5]">
               {note.data.description}
             </span>
           </div>
