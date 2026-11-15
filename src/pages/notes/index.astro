@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
 import { Pencil } from '@lucide/astro';
 
 const allNotes = await getCollection('notes', ({ data }) => !data.draft);
@@ -15,35 +16,39 @@ function formatDate(date: Date) {
 <Layout
   title="Notes — Eric Ruelas"
   description="Thoughts on product design, systems thinking, and building things."
+  maxWidth="1200px"
 >
   <Navbar />
-  <main class="px-6 py-8 sm:py-12">
-    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-8">
-      <span class="inline-flex items-center justify-center w-9 h-9 rounded-[6px] bg-[rgba(61,76,116,0.1)]">
-        <Pencil size={18} color="#3d4c74" strokeWidth={1.5} />
-      </span>
-      <h1 class="text-[28px] text-[#343844] font-normal leading-[1.2]">Notes</h1>
-    </div>
+  <div class="max-w-[700px]">
+    <main class="px-6 py-8 sm:py-12">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-8">
+        <span class="inline-flex items-center justify-center w-9 h-9 rounded-[6px] bg-[rgba(61,76,116,0.1)]">
+          <Pencil size={18} color="#3d4c74" strokeWidth={1.5} />
+        </span>
+        <h1 class="text-[28px] text-[#343844] font-normal leading-[1.2]">Notes</h1>
+      </div>
 
-    <div class="flex flex-col gap-3 mt-10">
-      {allNotes.map((note) => (
-        <a
-          href={`/notes/${note.id}`}
-          class="group p-5 rounded-xl border border-[#dadce0] hover:border-[#3d4c74]/30 hover:bg-[rgba(61,76,116,0.03)] transition-all duration-150 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8"
-        >
-          <span class="text-[13px] text-[#5c6168] shrink-0 tabular-nums">
-            {formatDate(note.data.date)}
-          </span>
-          <div class="flex flex-col gap-1">
-            <span class="text-[16px] text-[#343844] font-medium leading-snug group-hover:text-[#3d4c74] transition-colors duration-150">
-              {note.data.title}
+      <div class="flex flex-col gap-3 mt-10">
+        {allNotes.map((note) => (
+          <a
+            href={`/notes/${note.id}`}
+            class="group p-5 rounded-xl border border-[#dadce0] hover:border-[#3d4c74]/30 hover:bg-[rgba(61,76,116,0.03)] transition-all duration-150 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8"
+          >
+            <span class="text-[13px] text-[#5c6168] shrink-0 tabular-nums">
+              {formatDate(note.data.date)}
             </span>
-            <span class="text-[14px] text-[#5c6168] leading-[1.5]">
-              {note.data.description}
-            </span>
-          </div>
-        </a>
-      ))}
-    </div>
-  </main>
+            <div class="flex flex-col gap-1">
+              <span class="text-[16px] text-[#343844] font-medium leading-snug group-hover:text-[#3d4c74] transition-colors duration-150">
+                {note.data.title}
+              </span>
+              <span class="text-[14px] text-[#5c6168] leading-[1.5]">
+                {note.data.description}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </main>
+    <Footer />
+  </div>
 </Layout>
