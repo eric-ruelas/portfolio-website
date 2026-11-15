@@ -36,19 +36,23 @@ const jobs = [
     </button>
 
     <script>
-      const cvBtn = document.getElementById('download-cv-btn') as HTMLElement;
-      cvBtn?.addEventListener('click', () => {
-        const url = cvBtn.dataset.url ?? '';
-        if (url) window.open(url, '_blank', 'noopener,noreferrer');
-      });
-
-      document.querySelectorAll<HTMLAnchorElement>('[data-bg-link]').forEach((link) => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const w = window.open(link.href, '_blank', 'noopener,noreferrer');
-          if (w) { w.blur(); window.focus(); }
+      function initWorkExperience() {
+        const cvBtn = document.getElementById('download-cv-btn') as HTMLElement;
+        cvBtn?.addEventListener('click', () => {
+          const url = cvBtn.dataset.url ?? '';
+          if (url) window.open(url, '_blank', 'noopener,noreferrer');
         });
-      });
+
+        document.querySelectorAll<HTMLAnchorElement>('[data-bg-link]').forEach((link) => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const w = window.open(link.href, '_blank', 'noopener,noreferrer');
+            if (w) { w.blur(); window.focus(); }
+          });
+        });
+      }
+
+      document.addEventListener('astro:page-load', initWorkExperience);
     </script>
   </div>
 

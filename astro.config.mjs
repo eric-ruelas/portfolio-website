@@ -6,6 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://www.ericruelas.com',
   integrations: [sitemap()],
+  prefetch: {
+    defaultStrategy: 'hover',
+  },
   vite: {
     plugins: [tailwindcss()]
   }

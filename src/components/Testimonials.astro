@@ -62,23 +62,27 @@ const TRUNCATE_LENGTH = 180;
 </section>
 
 <script>
-  document.querySelectorAll('.read-more-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const idx = (btn as HTMLElement).dataset.index;
-      const short = document.querySelector(`.short-quote[data-index="${idx}"]`) as HTMLElement;
-      const full = document.querySelector(`.full-quote[data-index="${idx}"]`) as HTMLElement;
-      short.classList.add('hidden');
-      full.classList.remove('hidden');
+  function initTestimonials() {
+    document.querySelectorAll('.read-more-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const idx = (btn as HTMLElement).dataset.index;
+        const short = document.querySelector(`.short-quote[data-index="${idx}"]`) as HTMLElement;
+        const full = document.querySelector(`.full-quote[data-index="${idx}"]`) as HTMLElement;
+        short.classList.add('hidden');
+        full.classList.remove('hidden');
+      });
     });
-  });
 
-  document.querySelectorAll('.read-less-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const idx = (btn as HTMLElement).dataset.index;
-      const short = document.querySelector(`.short-quote[data-index="${idx}"]`) as HTMLElement;
-      const full = document.querySelector(`.full-quote[data-index="${idx}"]`) as HTMLElement;
-      full.classList.add('hidden');
-      short.classList.remove('hidden');
+    document.querySelectorAll('.read-less-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const idx = (btn as HTMLElement).dataset.index;
+        const short = document.querySelector(`.short-quote[data-index="${idx}"]`) as HTMLElement;
+        const full = document.querySelector(`.full-quote[data-index="${idx}"]`) as HTMLElement;
+        full.classList.add('hidden');
+        short.classList.remove('hidden');
+      });
     });
-  });
+  }
+
+  document.addEventListener('astro:page-load', initTestimonials);
 </script>

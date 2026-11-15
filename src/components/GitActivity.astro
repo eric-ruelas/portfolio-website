@@ -50,31 +50,41 @@ const username = 'eric-ruelas';
     4: 'Very active',
   };
 
-  // Custom instant tooltip — avoids the ~500ms native title delay
-  const tooltip = document.createElement('div');
-  Object.assign(tooltip.style, {
-    position: 'fixed',
-    background: '#343844',
-    color: '#fff',
-    padding: '4px 10px',
-    borderRadius: '6px',
-    fontSize: '12px',
-    lineHeight: '1.5',
-    pointerEvents: 'none',
-    opacity: '0',
-    transition: 'opacity 0.08s ease',
-    whiteSpace: 'nowrap',
-    zIndex: '50',
-  });
-  document.body.appendChild(tooltip);
+  // Custom instant tooltip — avoids the ~500ms native title delay.
+  // Reused across page-loads instead of appended fresh each time.
+  function getTooltip(): HTMLElement {
+    let tooltip = document.getElementById('git-activity-tooltip');
+    if (!tooltip) {
+      tooltip = document.createElement('div');
+      tooltip.id = 'git-activity-tooltip';
+      Object.assign(tooltip.style, {
+        position: 'fixed',
+        background: '#343844',
+        color: '#fff',
+        padding: '4px 10px',
+        borderRadius: '6px',
+        fontSize: '12px',
+        lineHeight: '1.5',
+        pointerEvents: 'none',
+        opacity: '0',
+        transition: 'opacity 0.08s ease',
+        whiteSpace: 'nowrap',
+        zIndex: '50',
+      });
+      document.body.appendChild(tooltip);
+    }
+    return tooltip;
+  }
 
   function showTooltip(e: MouseEvent, text: string) {
+    const tooltip = getTooltip();
     tooltip.textContent = text;
     tooltip.style.opacity = '1';
     positionTooltip(e);
   }
 
   function positionTooltip(e: MouseEvent) {
+    const tooltip = getTooltip();
     const x = e.clientX;
     const y = e.clientY;
     tooltip.style.left = `${x - tooltip.offsetWidth / 2}px`;
@@ -82,7 +92,7 @@ const username = 'eric-ruelas';
   }
 
   function hideTooltip() {
-    tooltip.style.opacity = '0';
+    getTooltip().style.opacity = '0';
   }
 
   async function loadActivity() {
@@ -112,7 +122,7 @@ const username = 'eric-ruelas';
         if (btn) showTooltip(e as MouseEvent, btn.dataset.tip ?? '');
       });
       grid.addEventListener('mousemove', (e) => {
-        if (tooltip.style.opacity === '1') positionTooltip(e as MouseEvent);
+        if (getTooltip().style.opacity === '1') positionTooltip(e as MouseEvent);
       });
       grid.addEventListener('mouseout', hideTooltip);
 
@@ -127,5 +137,5 @@ const username = 'eric-ruelas';
     }
   }
 
-  loadActivity();
+  document.addEventListener('astro:page-load', loadActivity);
 </script>

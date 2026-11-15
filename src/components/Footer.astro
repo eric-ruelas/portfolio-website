@@ -52,12 +52,16 @@ const icons: Record<string, string> = {
 </footer>
 
 <script>
-  document.querySelectorAll('[data-track-contact]').forEach((el) => {
-    el.addEventListener('click', () => {
-      window.posthog?.capture('contact_clicked', {
-        method: el.getAttribute('data-track-contact'),
-        location: 'footer',
+  function initContactTracking() {
+    document.querySelectorAll('[data-track-contact]').forEach((el) => {
+      el.addEventListener('click', () => {
+        window.posthog?.capture('contact_clicked', {
+          method: el.getAttribute('data-track-contact'),
+          location: 'footer',
+        });
       });
     });
-  });
+  }
+
+  document.addEventListener('astro:page-load', initContactTracking);
 </script>

@@ -23,6 +23,8 @@
 </section>
 
 <script>
+  let clockIntervalId: ReturnType<typeof setInterval> | undefined;
+
   function updateLocalTime() {
     const el = document.getElementById('local-time');
     if (!el) return;
@@ -37,6 +39,12 @@
     el.textContent = formatted;
   }
 
-  updateLocalTime();
-  setInterval(updateLocalTime, 1000);
+  function initClock() {
+    if (!document.getElementById('local-time')) return;
+    clearInterval(clockIntervalId);
+    updateLocalTime();
+    clockIntervalId = setInterval(updateLocalTime, 1000);
+  }
+
+  document.addEventListener('astro:page-load', initClock);
 </script>
