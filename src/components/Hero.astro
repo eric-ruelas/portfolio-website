@@ -8,10 +8,33 @@
     </h1>
 
     <p class="text-[15px] text-[#5c6168] leading-[1.6]">
-      I'm Eric — a Senior Product Designer in the San Francisco Bay Area. I design
-      complex software that's simple to use, with a focus on healthcare tools for
-      underserved communities.
+      Currently at CareMessage, designing complex software that's simple to use,
+      with a focus on healthcare tools for underserved communities.
     </p>
+
+    <div class="text-[13px] text-[#7a7f87] leading-[1.6]">
+      <p>San Francisco Bay Area, USA</p>
+      <p id="local-time">&nbsp;</p>
+    </div>
 
   </div>
 </section>
+
+<script>
+  function updateLocalTime() {
+    const el = document.getElementById('local-time');
+    if (!el) return;
+    const formatted = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Los_Angeles',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+      timeZoneName: 'short',
+    }).format(new Date());
+    el.textContent = formatted;
+  }
+
+  updateLocalTime();
+  setInterval(updateLocalTime, 1000);
+</script>
