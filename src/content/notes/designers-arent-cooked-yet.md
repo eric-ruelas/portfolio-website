@@ -3,7 +3,7 @@ title: "Rebuilding My Portfolio with Claude Code"
 description: "What I learned using AI to finally ship my own portfolio, the part designers always put last."
 date: 2026-06-26
 draft: false
-image: "/images/portfolio-build.png"
+image: "/images/portfolio-build.jpg"
 ---
 
 I've been exploring AI tools to improve my workflow, and I finally feel confident in a workflow.
@@ -14,7 +14,7 @@ One of the most ignored parts of being a designer is your own portfolio.
 
 So I wanted to see if I could use Claude Code to update mine, and learn a few things along the way.
 
-![My workspace while building this portfolio](/images/portfolio-build.png)
+![My workspace while building this portfolio](/images/portfolio-build.jpg)
 
 It all starts with a project folder, somewhere to keep the assets you need: images, docs, outlines of the site. This assumes you already have Claude Code installed. At work, I was lucky to have a great engineer on my team who helped me set up Git and explained how it works. Essentially, Git stores everything in that folder, all your code and assets. It's your source of truth. Once you've got a project folder, Claude Code, and a Git client installed, you can really begin.
 
