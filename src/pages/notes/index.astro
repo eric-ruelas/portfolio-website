@@ -31,7 +31,7 @@ function formatDate(date: Date) {
           {allNotes.map((note) => (
             <a
               href={`/notes/${note.id}`}
-              class="group p-5 rounded-xl border border-[#dadce0] hover:border-[#3d4c74]/30 hover:bg-[rgba(61,76,116,0.03)] transition-all duration-150 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8"
+              class="group p-5 rounded-xl border border-[#dadce0] hover:border-[#3d4c74]/30 hover:bg-[rgba(61,76,116,0.03)] transition-all duration-150 flex flex-col gap-2"
             >
               <span class="text-[13px] text-[#5c6168] shrink-0 tabular-nums">
                 {formatDate(note.data.date)}
