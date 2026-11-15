@@ -1,42 +1,26 @@
 ---
-import DotGridIcon from './DotGridIcon.astro';
-import { getSocialLinks, socialIcons } from '../lib/social';
+import { getSocialLinks } from '../lib/social';
 
 const email = import.meta.env.PUBLIC_EMAIL ?? '';
-const links = getSocialLinks(email);
-const icons = socialIcons;
+const links = getSocialLinks(email).filter((link) => link.label !== 'Freelance work');
 ---
 
-<footer class="px-6 pt-4 pb-10">
-  <div class="bg-[#3d4c74] rounded-2xl px-5 sm:px-8 py-6 sm:py-8">
-    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-6">
-      <DotGridIcon seed="contact" color="white" />
-      <h2 class="text-[28px] text-white font-normal leading-[1.2]">Contact</h2>
-    </div>
-
-    <div class="flex flex-col">
-      {links.map((link) => (
-        <a
-          href={link.href}
-          target={link.label !== 'Email' ? '_blank' : undefined}
-          rel={link.rel}
-          data-track-contact={link.label.toLowerCase()}
-          class="group flex flex-col sm:flex-row sm:items-baseline py-3 sm:py-4 gap-0.5 sm:gap-0 hover:opacity-70 transition-opacity duration-150"
-        >
-          <span class="flex items-center gap-2 text-[13px] sm:text-[15px] text-white/70 shrink-0">
-            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current shrink-0" set:html={icons[link.label]} />
-            {link.label}
-          </span>
-          <span class="hidden sm:block flex-1 mx-4 border-b border-dotted border-white/20"></span>
-          <span class="text-[15px] text-white font-medium shrink-0">{link.handle}</span>
-        </a>
-      ))}
-    </div>
-
-    <p class="text-[11px] text-white/45 font-mono mt-8">© 2026 - Eric Ruelas</p>
+<footer class="px-6 pb-8 sm:pb-10">
+  <div class="flex flex-wrap gap-x-5 gap-y-2">
+    {links.map((link) => (
+      <a
+        href={link.href}
+        target={link.label !== 'Email' ? '_blank' : undefined}
+        rel={link.rel}
+        data-track-contact={link.label.toLowerCase()}
+        class="text-[13px] text-[#5c6168] hover:text-[#3d4c74] hover:underline underline-offset-4 decoration-1 transition-colors duration-150"
+      >
+        {link.label === 'Email' ? link.handle : link.label}
+      </a>
+    ))}
   </div>
-
-  <p class="text-[11px] text-[#5c6168]/70 font-mono italic text-center mt-4">"I wish there was a way to know you're in the good old days, before you've actually left them"</p>
+  <p class="text-[11px] text-[#7a7f87]/70 font-mono mt-4">© 2026 - Eric Ruelas</p>
+  <p class="text-[11px] text-[#5c6168]/70 font-mono italic mt-4">"I wish there was a way to know you're in the good old days, before you've actually left them"</p>
 </footer>
 
 <script>

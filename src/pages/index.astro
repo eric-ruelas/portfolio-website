@@ -2,30 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
-import { getSocialLinks } from '../lib/social';
-
-const email = import.meta.env.PUBLIC_EMAIL ?? '';
-const links = getSocialLinks(email);
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout maxWidth="1200px">
   <div class="min-h-dvh flex flex-col">
     <Navbar />
     <Hero />
-    <footer class="px-6 pb-8 sm:pb-10">
-      <div class="flex flex-wrap gap-x-5 gap-y-2">
-        {links.filter((link) => link.label !== 'Freelance work').map((link) => (
-          <a
-            href={link.href}
-            target={link.label !== 'Email' ? '_blank' : undefined}
-            rel={link.rel}
-            class="text-[13px] text-[#5c6168] hover:text-[#3d4c74] hover:underline underline-offset-4 decoration-1 transition-colors duration-150"
-          >
-            {link.label === 'Email' ? link.handle : link.label}
-          </a>
-        ))}
-      </div>
-      <p class="text-[11px] text-[#7a7f87]/70 font-mono mt-4">© 2026 - Eric Ruelas</p>
-    </footer>
+    <Footer />
   </div>
 </Layout>
