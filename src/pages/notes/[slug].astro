@@ -12,8 +12,6 @@ export async function getStaticPaths() {
   }));
 }
 
-return Astro.redirect('/', 302);
-
 const { note } = Astro.props;
 const { Content } = await render(note);
 

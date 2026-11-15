@@ -1,16 +1,16 @@
 ---
 title: "Rebuilding My Portfolio with Claude Code"
-description: "What I learned using AI to finally ship my own portfolio — the part designers always put last."
+description: "What I learned using AI to finally ship my own portfolio, the part designers always put last."
 date: 2026-06-26
 draft: false
 image: "/images/portfolio-build.png"
 ---
 
-For the last couple of months I've been exploring AI tools to improve my workflow, and only recently have I gotten into the weeds of it.
+I've been exploring AI tools to improve my workflow, and I finally feel confident in a workflow.
 
-I've improved how I work both at my 9–5 and on my own projects. It hasn't replaced the creative part. It's improved the process around it. Building prototypes for usability tests, synthesizing research, even coming up with new ways to display information in a dashboard that I wouldn't have thought of, all without wasting hours wiring static designs together just to get something clickable.
+At work, it's improved the way I build prototypes, synthesize research, and ideate on concepts, all without touching the creative part of the job.
 
-One of the most ignored parts of being a designer is your own portfolio. I can execute on work projects, client projects, even favors for friends. But when it comes to my own portfolio, I move at 0.25x speed.
+One of the most ignored parts of being a designer is your own portfolio.
 
 So I wanted to see if I could use Claude Code to update mine, and learn a few things along the way.
 

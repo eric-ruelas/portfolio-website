@@ -5,11 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://www.ericruelas.com',
-  integrations: [
-    sitemap({
-      filter: (page) => !page.includes('/notes'),
-    }),
-  ],
+  integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()]
   }

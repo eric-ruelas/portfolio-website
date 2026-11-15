@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import DotGridIcon from '../components/DotGridIcon.astro';
+---
+
+<Layout
+  title="Work — Eric Ruelas"
+  description="Case studies and projects by Eric Ruelas. Coming soon."
+>
+  <Navbar />
+  <main class="px-6 py-8 sm:py-12">
+    <div class="flex items-center gap-2 sm:gap-3 mb-4">
+      <DotGridIcon seed="work-page" />
+      <h1 class="text-[28px] text-[#343844] font-normal leading-[1.2]">Work</h1>
+    </div>
+
+    <p class="text-[15px] text-[#5c6168] leading-[1.6]">
+      Case studies are a work in progress — check back soon.
+    </p>
+  </main>
+  <Footer />
+</Layout>
