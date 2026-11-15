@@ -3,25 +3,49 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import DotGridIcon from '../components/DotGridIcon.astro';
+
+const projects = [
+  { id: 'plexuss', title: 'Plexuss', image: '/images/work/plexuss.jpg' },
+  { id: 'u-fi', title: 'U-fi', image: '/images/work/u-fi.jpg' },
+  { id: 'unlimitedtutoring', title: 'UnlimitedTutoring.com', image: '/images/work/unlimitedtutoring.jpg' },
+  { id: 'bayan', title: 'Bayan', image: '/images/work/bayan.jpg' },
+  { id: 'ncrf', title: 'National College Resources Foundation', image: '/images/work/ncrf.jpg' },
+];
 ---
 
 <Layout
   title="Work — Eric Ruelas"
-  description="Case studies and projects by Eric Ruelas. Coming soon."
+  description="Selected projects by Eric Ruelas."
   maxWidth="1200px"
 >
   <div class="min-h-dvh flex flex-col">
     <Navbar />
-    <div class="max-w-[700px] flex-1 flex flex-col">
+    <div class="max-w-[1000px] flex-1 flex flex-col">
       <main class="flex-1 px-6 py-8 sm:py-12">
         <div class="flex items-center gap-2 sm:gap-3 mb-4">
           <DotGridIcon seed="work-page" />
           <h1 class="text-[28px] text-[#343844] font-normal leading-[1.2]">Work</h1>
         </div>
 
-        <p class="text-[15px] text-[#5c6168] leading-[1.6]">
-          Case studies are a work in progress — check back soon.
+        <p class="text-[15px] text-[#5c6168] leading-[1.6] mb-10">
+          Full case studies for my CareMessage work are in progress. In the meantime, here's a look at past projects.
         </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+          {projects.map((project) => (
+            <div class="group relative aspect-square rounded-lg overflow-hidden flex items-end">
+              <img
+                src={project.image}
+                alt={project.title}
+                class="absolute inset-0 w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0"></div>
+              <p class="relative text-[13px] text-white font-medium leading-snug p-3">
+                {project.title}
+              </p>
+            </div>
+          ))}
+        </div>
       </main>
       <Footer />
     </div>
