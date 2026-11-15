@@ -1,4 +1,6 @@
 ---
+import { Menu, X } from '@lucide/astro';
+
 const pathname = Astro.url.pathname;
 const isWork = pathname.startsWith('/work');
 const isNotes = pathname.startsWith('/notes');
@@ -10,6 +12,13 @@ const links = [
   { label: 'About', href: '/about', active: isAbout },
 ];
 ---
+
+<style>
+  #nav-mobile-panel {
+    overflow: hidden;
+    transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+  }
+</style>
 
 <header class="px-6 pt-6">
   <nav class="flex items-center justify-between gap-4">
@@ -23,7 +32,8 @@ const links = [
       </div>
     </a>
 
-    <div class="flex items-center gap-4 sm:gap-6 shrink-0">
+    <!-- Desktop links -->
+    <div class="hidden sm:flex items-center gap-6 shrink-0">
       {links.map((link) => (
         <a
           href={link.href}
@@ -38,5 +48,58 @@ const links = [
         </a>
       ))}
     </div>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="nav-menu-btn"
+      class="sm:hidden flex items-center justify-center w-9 h-9 rounded-full border border-[#3d4c74] text-[#3d4c74] cursor-pointer shrink-0"
+      aria-label="Open menu"
+      aria-expanded="false"
+    >
+      <span id="nav-menu-icon"><Menu size={16} strokeWidth={1.5} /></span>
+      <span id="nav-menu-close-icon" class="hidden"><X size={16} strokeWidth={1.5} /></span>
+    </button>
   </nav>
+
+  <!-- Mobile dropdown panel -->
+  <div id="nav-mobile-panel" class="sm:hidden" style="max-height: 0; opacity: 0;">
+    <div class="flex flex-col gap-1 pt-4 pb-2">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'text-[15px] py-2 transition-colors duration-150',
+            link.active ? 'text-[#3d4c74] font-medium' : 'text-[#5c6168]'
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
 </header>
+
+<script>
+  function initNavMenu() {
+    const btn = document.getElementById('nav-menu-btn');
+    const panel = document.getElementById('nav-mobile-panel') as HTMLElement;
+    const menuIcon = document.getElementById('nav-menu-icon');
+    const closeIcon = document.getElementById('nav-menu-close-icon');
+    if (!btn || !panel) return;
+
+    let open = false;
+
+    function setOpen(next: boolean) {
+      open = next;
+      panel.style.maxHeight = open ? '220px' : '0';
+      panel.style.opacity = open ? '1' : '0';
+      menuIcon?.classList.toggle('hidden', open);
+      closeIcon?.classList.toggle('hidden', !open);
+      btn!.setAttribute('aria-expanded', String(open));
+    }
+
+    btn.addEventListener('click', () => setOpen(!open));
+  }
+
+  document.addEventListener('astro:page-load', initNavMenu);
+</script>

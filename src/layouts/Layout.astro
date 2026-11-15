@@ -8,6 +8,7 @@ interface Props {
   description?: string;
   image?: string;
   publishedTime?: string;
+  maxWidth?: string;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   description = 'Eric Ruelas is a Senior Product Designer in the San Francisco Bay Area, designing accessible software for healthcare tools serving underserved communities.',
   image = '/ericuelas.png',
   publishedTime,
+  maxWidth = '700px',
 } = Astro.props;
 
 const isArticle = !!publishedTime;
@@ -114,7 +116,7 @@ const ogImage = new URL(image, Astro.site);
     </script>
   </head>
   <body>
-    <div class="max-w-[700px] mx-auto">
+    <div class="mx-auto" style={`max-width: ${maxWidth};`}>
       <slot />
     </div>
     <Analytics />
