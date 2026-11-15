@@ -8,8 +8,23 @@ import DotGridIcon from '../../components/DotGridIcon.astro';
 const allNotes = await getCollection('notes', ({ data }) => !data.draft);
 allNotes.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-function formatDate(date: Date) {
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+function formatYear(date: Date) {
+  return date.getFullYear().toString();
+}
+
+function formatShortDate(date: Date) {
+  return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+const notesByYear: { year: string; notes: typeof allNotes }[] = [];
+for (const note of allNotes) {
+  const year = formatYear(note.data.date);
+  const group = notesByYear.find((g) => g.year === year);
+  if (group) {
+    group.notes.push(note);
+  } else {
+    notesByYear.push({ year, notes: [note] });
+  }
 }
 ---
 
@@ -22,31 +37,36 @@ function formatDate(date: Date) {
     <Navbar />
     <div class="max-w-[700px] flex-1 flex flex-col">
       <main class="flex-1 px-6 py-8 sm:py-12">
-        <div class="flex items-center gap-2 sm:gap-3 mb-8">
+        <div class="flex items-center gap-2 sm:gap-3 mb-10">
           <DotGridIcon seed="notes" />
           <h1 class="text-[28px] text-[#343844] font-normal leading-[1.2]">Notes</h1>
         </div>
 
-        <div class="flex flex-col gap-3 mt-10">
-          {allNotes.map((note) => (
-            <a
-              href={`/notes/${note.id}`}
-              class="group p-5 rounded-xl border border-[#dadce0] hover:border-[#3d4c74]/30 hover:bg-[rgba(61,76,116,0.03)] transition-all duration-150 flex flex-col gap-2"
-            >
-              <span class="text-[13px] text-[#5c6168] shrink-0 tabular-nums">
-                {formatDate(note.data.date)}
-              </span>
-              <div class="flex flex-col gap-1">
-                <span class="text-[16px] text-[#343844] font-medium leading-snug group-hover:text-[#3d4c74] transition-colors duration-150">
-                  {note.data.title}
-                </span>
-                <span class="text-[14px] text-[#5c6168] leading-[1.5]">
-                  {note.data.description}
-                </span>
-              </div>
-            </a>
-          ))}
-        </div>
+        {notesByYear.map(({ year, notes }) => (
+          <div class="mb-12">
+            <p class="text-[13px] text-[#5c6168] font-mono pb-3 mb-6 border-b border-[#dadce0]">{year}</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10">
+              {notes.map((note) => (
+                <a href={`/notes/${note.id}`} class="group flex flex-col">
+                  <div class="rounded-2xl border border-[#dadce0] bg-white p-6 aspect-[3/4] flex flex-col gap-4 group-hover:border-[#3d4c74]/30 group-hover:shadow-[0_8px_24px_rgba(52,56,68,0.08)] transition-all duration-150">
+                    <h2 class="text-[20px] text-[#343844] font-medium leading-snug">
+                      {note.data.title}
+                    </h2>
+                    <div class="flex-1 flex items-center justify-center">
+                      <DotGridIcon seed={note.id} size={96} />
+                    </div>
+                  </div>
+
+                  <h3 class="text-[15px] text-[#343844] font-medium leading-snug mt-4 group-hover:text-[#3d4c74] transition-colors duration-150">
+                    {note.data.title}
+                  </h3>
+                  <p class="text-[13px] text-[#5c6168] mt-1">{formatShortDate(note.data.date)}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
       </main>
       <Footer />
     </div>

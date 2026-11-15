@@ -7,6 +7,7 @@ interface Props {
 
 const { seed, size = 22, color = '#3d4c74' } = Astro.props;
 const COLS = 4;
+const dotSize = size * (2.5 / 22);
 
 function hash(str: string, salt: number) {
   let h = salt;
@@ -39,14 +40,14 @@ const dots = Array.from({ length: COLS * COLS }).map((_, i) => {
   ))}
 </span>
 
-<style>
+<style define:vars={{ dotSize: `${dotSize}px` }}>
   .dot-grid-icon {
     display: inline-grid;
     place-items: center;
   }
   .dot-cell {
-    width: 2.5px;
-    height: 2.5px;
+    width: var(--dotSize);
+    height: var(--dotSize);
     border-radius: 50%;
     justify-self: center;
     align-self: center;
