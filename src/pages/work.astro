@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import DotGridIcon from '../components/DotGridIcon.astro';
+import { X, ChevronLeft, ChevronRight } from '@lucide/astro';
 
 const projects = [
   {
@@ -60,22 +61,125 @@ const tiles = projects.flatMap((project) =>
         </p>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
-          {tiles.map((tile) => (
-            <div class="group relative aspect-square rounded-lg overflow-hidden flex items-end">
+          {tiles.map((tile, index) => (
+            <button
+              type="button"
+              class="group relative aspect-square rounded-lg overflow-hidden flex items-end cursor-zoom-in"
+              data-work-tile
+              data-index={index}
+            >
               <img
                 src={tile.image}
                 alt={tile.title}
-                class="absolute inset-0 w-full h-full object-cover"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-[1.03]"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0"></div>
-              <p class="relative w-full min-w-0 text-[13px] text-white font-medium leading-snug p-3 break-words">
+              <p class="relative w-full min-w-0 text-[13px] text-white font-medium leading-snug p-3 break-words text-left">
                 {tile.title}
               </p>
-            </div>
+            </button>
           ))}
         </div>
       </main>
       <Footer />
     </div>
   </div>
+
+  <div
+    id="work-lightbox"
+    class="hidden fixed inset-0 z-50 items-center justify-center bg-black/80 p-4 sm:p-8"
+    role="dialog"
+    aria-modal="true"
+  >
+    <button id="lightbox-close" class="absolute top-4 right-4 sm:top-6 sm:right-6 text-white/80 hover:text-white transition-colors duration-150" aria-label="Close">
+      <X size={28} strokeWidth={1.5} />
+    </button>
+    <button id="lightbox-prev" class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors duration-150 p-2" aria-label="Previous image">
+      <ChevronLeft size={32} strokeWidth={1.5} />
+    </button>
+    <button id="lightbox-next" class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors duration-150 p-2" aria-label="Next image">
+      <ChevronRight size={32} strokeWidth={1.5} />
+    </button>
+    <figure class="max-w-[1200px] w-full flex flex-col items-center gap-3">
+      <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-lg" />
+      <figcaption class="text-[13px] text-white/70 flex items-center gap-2">
+        <span id="lightbox-title"></span>
+        <span id="lightbox-counter" class="text-white/40"></span>
+      </figcaption>
+    </figure>
+  </div>
 </Layout>
+
+<script define:vars={{ images: tiles.map((t) => t.image), titles: tiles.map((t) => t.title) }}>
+  function initWorkLightbox() {
+    const lightbox = document.getElementById('work-lightbox');
+    const imgEl = document.getElementById('lightbox-img');
+    const titleEl = document.getElementById('lightbox-title');
+    const counterEl = document.getElementById('lightbox-counter');
+    const prevBtn = document.getElementById('lightbox-prev');
+    const nextBtn = document.getElementById('lightbox-next');
+    const closeBtn = document.getElementById('lightbox-close');
+    const tileEls = document.querySelectorAll('[data-work-tile]');
+    if (!lightbox || !imgEl || !titleEl || !counterEl || !prevBtn || !nextBtn || !closeBtn || !tileEls.length) return;
+
+    let index = 0;
+
+    function render() {
+      imgEl.src = images[index];
+      imgEl.alt = titles[index];
+      titleEl.textContent = titles[index];
+      counterEl.textContent = `${index + 1} / ${images.length}`;
+    }
+
+    function open(startIndex) {
+      index = startIndex;
+      render();
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    function next() {
+      index = (index + 1) % images.length;
+      render();
+    }
+
+    function prev() {
+      index = (index - 1 + images.length) % images.length;
+      render();
+    }
+
+    tileEls.forEach((tile) => {
+      tile.addEventListener('click', () => {
+        open(Number(tile.dataset.index));
+      });
+    });
+
+    closeBtn.addEventListener('click', close);
+    nextBtn.addEventListener('click', next);
+    prevBtn.addEventListener('click', prev);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) close();
+    });
+
+    if (window.__workLightboxKeyHandler) {
+      document.removeEventListener('keydown', window.__workLightboxKeyHandler);
+    }
+    function onKey(e) {
+      if (lightbox.classList.contains('hidden')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') prev();
+    }
+    window.__workLightboxKeyHandler = onKey;
+    document.addEventListener('keydown', onKey);
+  }
+
+  document.addEventListener('astro:page-load', initWorkLightbox);
+</script>
