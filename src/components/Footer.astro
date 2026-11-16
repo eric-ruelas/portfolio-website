@@ -6,7 +6,7 @@ const links = getSocialLinks(email).filter((link) => link.label !== 'Freelance w
 ---
 
 <footer class="px-6 pb-8 sm:pb-10">
-  <div class="flex flex-wrap items-start justify-between gap-6">
+  <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
     <div>
       <div class="flex flex-wrap gap-x-5 gap-y-2">
         {links.map((link) => (
@@ -24,7 +24,7 @@ const links = getSocialLinks(email).filter((link) => link.label !== 'Freelance w
       <p class="text-[11px] text-[#7a7f87]/70 font-mono mt-4">© 2026 - Eric Ruelas</p>
     </div>
 
-    <div class="text-[13px] text-[#7a7f87] leading-[1.5] text-right">
+    <div class="text-[13px] text-[#7a7f87] leading-[1.5] sm:text-right">
       <p>San Francisco Bay Area, USA</p>
       <p id="footer-local-time">&nbsp;</p>
     </div>

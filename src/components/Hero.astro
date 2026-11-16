@@ -13,11 +13,6 @@
           Currently at <a href="https://www.caremessage.org/" target="_blank" rel="noopener noreferrer" class="text-[#3d4c74] hover:underline">CareMessage</a>, designing complex software that's simple to use,
           with a focus on healthcare tools for underserved communities.
         </p>
-
-        <div class="text-[13px] text-[#7a7f87] leading-[1.5]">
-          <p>San Francisco Bay Area, USA</p>
-          <p id="local-time">&nbsp;</p>
-        </div>
       </div>
     </div>
   </div>
@@ -34,30 +29,3 @@
     </div>
   </div>
 </section>
-
-<script>
-  let clockIntervalId: ReturnType<typeof setInterval> | undefined;
-
-  function updateLocalTime() {
-    const el = document.getElementById('local-time');
-    if (!el) return;
-    const formatted = new Intl.DateTimeFormat('en-US', {
-      timeZone: 'America/Los_Angeles',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-      timeZoneName: 'short',
-    }).format(new Date());
-    el.textContent = formatted;
-  }
-
-  function initClock() {
-    if (!document.getElementById('local-time')) return;
-    clearInterval(clockIntervalId);
-    updateLocalTime();
-    clockIntervalId = setInterval(updateLocalTime, 1000);
-  }
-
-  document.addEventListener('astro:page-load', initClock);
-</script>
