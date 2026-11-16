@@ -2,9 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import AboutMe from '../components/AboutMe.astro';
 import WorkExperience from '../components/WorkExperience.astro';
-import Skills from '../components/Skills.astro';
-import Playground from '../components/Playground.astro';
 import Testimonials from '../components/Testimonials.astro';
 import GitActivity from '../components/GitActivity.astro';
 ---
@@ -18,9 +17,8 @@ import GitActivity from '../components/GitActivity.astro';
     <Navbar />
     <div class="max-w-[700px] flex-1 flex flex-col">
       <main class="flex-1">
+        <AboutMe />
         <WorkExperience />
-        <Skills />
-        <Playground />
         <Testimonials />
         <GitActivity />
       </main>
