@@ -12,8 +12,8 @@ interface Props {
 }
 
 const {
-  title = 'Eric Ruelas, Senior Product Designer',
-  description = 'Eric Ruelas is a Senior Product Designer in the San Francisco Bay Area, designing accessible software for healthcare tools serving underserved communities.',
+  title = 'Eric Ruelas, Product Designer',
+  description = 'Eric Ruelas is a Product Designer in the San Francisco Bay Area, designing accessible software for healthcare tools serving underserved communities.',
   image = '/ericuelas.png',
   publishedTime,
   maxWidth = '700px',
@@ -59,7 +59,7 @@ const ogImage = new URL(image, Astro.site);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content="Eric Ruelas — Senior Product Designer" />
+    <meta name="twitter:image:alt" content="Eric Ruelas — Product Designer" />
 
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -68,7 +68,7 @@ const ogImage = new URL(image, Astro.site);
       "name": "Eric Ruelas",
       "url": "https://www.ericruelas.com",
       "image": ogImage.toString(),
-      "jobTitle": "Senior Product Designer",
+      "jobTitle": "Product Designer",
       "description": description,
       "address": {
         "@type": "PostalAddress",
