@@ -46,22 +46,16 @@ for (const note of allNotes) {
           <div class="mb-12">
             <p class="text-[13px] text-[#5c6168] font-mono pb-3 mb-6 border-b border-[#dadce0]">{year}</p>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10">
+            <div class="flex flex-col">
               {notes.map((note) => (
-                <a href={`/notes/${note.id}`} class="group flex flex-col">
-                  <div class="rounded-2xl border border-[#dadce0] bg-white p-6 aspect-[3/4] flex flex-col gap-4 group-hover:border-[#3d4c74]/30 group-hover:shadow-[0_8px_24px_rgba(52,56,68,0.08)] transition-all duration-150">
-                    <h2 class="text-[20px] text-[#343844] font-medium leading-snug">
-                      {note.data.title}
-                    </h2>
-                    <div class="flex-1 flex items-center justify-center">
-                      <DotGridIcon seed={note.id} size={96} />
-                    </div>
-                  </div>
-
-                  <h3 class="text-[15px] text-[#343844] font-medium leading-snug mt-4 group-hover:text-[#3d4c74] transition-colors duration-150">
+                <a
+                  href={`/notes/${note.id}`}
+                  class="group flex items-baseline justify-between gap-4 py-5 border-b border-[#dadce0] last:border-b-0"
+                >
+                  <h2 class="text-[17px] text-[#343844] font-medium leading-snug group-hover:text-[#3d4c74] transition-colors duration-150">
                     {note.data.title}
-                  </h3>
-                  <p class="text-[13px] text-[#5c6168] mt-1">{formatShortDate(note.data.date)}</p>
+                  </h2>
+                  <p class="text-[13px] text-[#5c6168] shrink-0 whitespace-nowrap">{formatShortDate(note.data.date)}</p>
                 </a>
               ))}
             </div>
