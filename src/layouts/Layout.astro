@@ -88,6 +88,16 @@ const ogImage = new URL(image, Astro.site);
       }
     })} />
 
+    {Astro.url.pathname === '/' && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Eric Ruelas",
+        "url": "https://www.ericruelas.com",
+        "alternateName": ["ericruelas.com"]
+      })} />
+    )}
+
     <ClientRouter />
 
     <slot name="head" />
