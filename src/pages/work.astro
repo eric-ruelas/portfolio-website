@@ -3,13 +3,38 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import DotGridIcon from '../components/DotGridIcon.astro';
+import { X, ChevronLeft, ChevronRight } from '@lucide/astro';
 
 const projects = [
-  { id: 'plexuss', title: 'Plexuss', image: '/images/work/plexuss.jpg' },
-  { id: 'u-fi', title: 'U-fi', image: '/images/work/u-fi.jpg' },
-  { id: 'unlimitedtutoring', title: 'UnlimitedTutoring.com', image: '/images/work/unlimitedtutoring.jpg' },
-  { id: 'bayan', title: 'Bayan', image: '/images/work/bayan.jpg' },
-  { id: 'ncrf', title: 'National College Resources Foundation', image: '/images/work/ncrf.jpg' },
+  {
+    id: 'plexuss',
+    title: 'Plexuss',
+    images: ['/images/work/plexuss.jpg', '/images/work/plexuss-2.jpg'],
+  },
+  {
+    id: 'u-fi',
+    title: 'U-fi',
+    images: ['/images/work/u-fi.jpg', '/images/work/u-fi-2.jpg'],
+  },
+  {
+    id: 'unlimitedtutoring',
+    title: 'UnlimitedTutoring.com',
+    images: [
+      '/images/work/unlimitedtutoring.jpg',
+      '/images/work/unlimitedtutoring-2.jpg',
+      '/images/work/unlimitedtutoring-3.jpg',
+    ],
+  },
+  {
+    id: 'bayan',
+    title: 'Bayan',
+    images: ['/images/work/bayan.jpg', '/images/work/bayan-2.jpg'],
+  },
+  {
+    id: 'ncrf',
+    title: 'National College Resources Foundation',
+    images: ['/images/work/ncrf.jpg', '/images/work/ncrf-2.jpg'],
+  },
 ];
 ---
 
@@ -33,21 +58,134 @@ const projects = [
 
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
           {projects.map((project) => (
-            <div class="group relative aspect-square rounded-lg overflow-hidden flex items-end">
+            <button
+              type="button"
+              class="group relative aspect-square rounded-lg overflow-hidden flex items-end cursor-zoom-in"
+              data-work-tile
+              data-images={JSON.stringify(project.images)}
+              data-title={project.title}
+            >
               <img
-                src={project.image}
+                src={project.images[0]}
                 alt={project.title}
-                class="absolute inset-0 w-full h-full object-cover"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-[1.03]"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0"></div>
-              <p class="relative text-[13px] text-white font-medium leading-snug p-3">
+              <p class="relative text-[13px] text-white font-medium leading-snug p-3 text-left">
                 {project.title}
               </p>
-            </div>
+            </button>
           ))}
         </div>
       </main>
       <Footer />
     </div>
   </div>
+
+  <div
+    id="work-lightbox"
+    class="hidden fixed inset-0 z-50 items-center justify-center bg-black/80 p-4 sm:p-8"
+    role="dialog"
+    aria-modal="true"
+  >
+    <button id="lightbox-close" class="absolute top-4 right-4 sm:top-6 sm:right-6 text-white/80 hover:text-white transition-colors duration-150" aria-label="Close">
+      <X size={28} strokeWidth={1.5} />
+    </button>
+    <button id="lightbox-prev" class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors duration-150 p-2" aria-label="Previous image">
+      <ChevronLeft size={32} strokeWidth={1.5} />
+    </button>
+    <button id="lightbox-next" class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors duration-150 p-2" aria-label="Next image">
+      <ChevronRight size={32} strokeWidth={1.5} />
+    </button>
+    <figure class="max-w-[1200px] w-full flex flex-col items-center gap-3">
+      <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[75vh] object-contain rounded-lg" />
+      <figcaption class="text-[13px] text-white/70 flex items-center gap-2">
+        <span id="lightbox-title"></span>
+        <span id="lightbox-counter" class="text-white/40"></span>
+      </figcaption>
+    </figure>
+  </div>
 </Layout>
+
+<script>
+  function initWorkLightbox() {
+    const lightbox = document.getElementById('work-lightbox');
+    const imgEl = document.getElementById('lightbox-img') as HTMLImageElement | null;
+    const titleEl = document.getElementById('lightbox-title');
+    const counterEl = document.getElementById('lightbox-counter');
+    const prevBtn = document.getElementById('lightbox-prev');
+    const nextBtn = document.getElementById('lightbox-next');
+    const closeBtn = document.getElementById('lightbox-close');
+    const tiles = document.querySelectorAll<HTMLElement>('[data-work-tile]');
+    if (!lightbox || !imgEl || !titleEl || !counterEl || !prevBtn || !nextBtn || !closeBtn || !tiles.length) return;
+
+    let images: string[] = [];
+    let title = '';
+    let index = 0;
+
+    function render() {
+      if (!imgEl || !titleEl || !counterEl || !prevBtn || !nextBtn) return;
+      imgEl.src = images[index];
+      imgEl.alt = title;
+      titleEl.textContent = title;
+      counterEl.textContent = images.length > 1 ? `${index + 1} / ${images.length}` : '';
+      prevBtn.classList.toggle('hidden', images.length < 2);
+      nextBtn.classList.toggle('hidden', images.length < 2);
+    }
+
+    function open(imgs: string[], t: string) {
+      images = imgs;
+      title = t;
+      index = 0;
+      render();
+      lightbox?.classList.remove('hidden');
+      lightbox?.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      lightbox?.classList.add('hidden');
+      lightbox?.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    function next() {
+      index = (index + 1) % images.length;
+      render();
+    }
+
+    function prev() {
+      index = (index - 1 + images.length) % images.length;
+      render();
+    }
+
+    tiles.forEach((tile) => {
+      tile.addEventListener('click', () => {
+        const imgs = JSON.parse(tile.dataset.images || '[]');
+        open(imgs, tile.dataset.title || '');
+      });
+    });
+
+    closeBtn.addEventListener('click', close);
+    nextBtn.addEventListener('click', next);
+    prevBtn.addEventListener('click', prev);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) close();
+    });
+
+    const win = window as typeof window & { __workLightboxKeyHandler?: (e: KeyboardEvent) => void };
+    if (win.__workLightboxKeyHandler) {
+      document.removeEventListener('keydown', win.__workLightboxKeyHandler);
+    }
+    function onKey(e: KeyboardEvent) {
+      if (!lightbox || lightbox.classList.contains('hidden')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') prev();
+    }
+    win.__workLightboxKeyHandler = onKey;
+    document.addEventListener('keydown', onKey);
+  }
+
+  document.addEventListener('astro:page-load', initWorkLightbox);
+</script>
