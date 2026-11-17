@@ -2,13 +2,13 @@
 import DotGridIcon from './DotGridIcon.astro';
 ---
 
-<section class="px-6 py-8 sm:py-12">
-  <div class="flex items-center gap-2 sm:gap-3 mb-6">
+<section class="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-16 pb-8 sm:pb-12">
+  <div class="flex items-center gap-2 sm:gap-3 lg:w-[320px] lg:shrink-0">
     <DotGridIcon seed="about-me" />
-    <h2 class="text-[28px] text-[#343844] font-normal leading-[1.2]">About</h2>
+    <h1 class="text-[28px] text-[#343844] font-normal leading-[1.2] whitespace-nowrap">About</h1>
   </div>
 
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-4 lg:max-w-[700px]">
     <p class="text-[15px] text-[#5c6168] leading-[1.6]">
       I'm a product designer based in the San Francisco Bay Area, currently at CareMessage, where I design healthcare software for underserved communities. Before that, I spent three years at Plexuss building tools that connect students with colleges.
     </p>

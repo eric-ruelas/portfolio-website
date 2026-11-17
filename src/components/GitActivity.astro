@@ -3,31 +3,33 @@ import DotGridIcon from './DotGridIcon.astro';
 const username = 'eric-ruelas';
 ---
 
-<section class="px-6 py-8 sm:py-12">
-  <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-8">
+<section class="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-16 py-8 sm:py-12">
+  <div class="flex items-center gap-2 sm:gap-3 lg:w-[320px] lg:shrink-0">
     <DotGridIcon seed="git-activity" />
-    <h2 class="text-[28px] text-[#343844] font-normal leading-[1.2]">Git Activity</h2>
+    <h2 class="text-[28px] text-[#343844] font-normal leading-[1.2] whitespace-nowrap">Git Activity</h2>
   </div>
 
-  <p class="text-[11px] font-semibold tracking-widest uppercase text-[#5c6168] mb-3">Last 30 days</p>
+  <div class="flex-1 lg:max-w-[700px]">
+    <p class="text-[11px] font-semibold tracking-widest uppercase text-[#5c6168] mb-3">Last 30 days</p>
 
-  <!-- Grid populated client-side so data is always fresh -->
-  <div id="git-grid" class="grid grid-cols-[repeat(30,minmax(0,1fr))] gap-1 w-full">
-    {Array.from({ length: 30 }).map(() => (
-      <div class="aspect-square w-full rounded-[3px] bg-[#e2e4e9] animate-pulse" />
-    ))}
-  </div>
+    <!-- Grid populated client-side so data is always fresh -->
+    <div id="git-grid" class="grid grid-cols-[repeat(30,minmax(0,1fr))] gap-1 w-full">
+      {Array.from({ length: 30 }).map(() => (
+        <div class="aspect-square w-full rounded-[3px] bg-[#e2e4e9] animate-pulse" />
+      ))}
+    </div>
 
-  <div class="mt-3 flex items-center justify-between">
-    <a
-      href={`https://github.com/${username}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="text-[13px] text-[#5c6168] hover:text-[#3d4c74] transition-colors"
-    >
-      github.com/{username}
-    </a>
-    <span id="git-total" class="text-[13px] text-[#5c6168] hidden"></span>
+    <div class="mt-3 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0 sm:justify-between">
+      <a
+        href={`https://github.com/${username}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-[13px] text-[#5c6168] hover:text-[#3d4c74] transition-colors"
+      >
+        github.com/{username}
+      </a>
+      <span id="git-total" class="text-[13px] text-[#5c6168] hidden"></span>
+    </div>
   </div>
 </section>
 
