@@ -15,7 +15,7 @@ const links = getSocialLinks(email).filter((link) => link.label !== 'Freelance w
             target={link.label !== 'Email' ? '_blank' : undefined}
             rel={link.rel}
             data-track-contact={link.label.toLowerCase()}
-            class="inline-flex items-center gap-1 text-[13px] text-[#5c6168] hover:text-[#3d4c74] hover:underline underline-offset-4 decoration-1 transition-colors duration-150"
+            class="inline-flex items-center gap-1 text-[13px] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:underline underline-offset-4 decoration-1 transition-colors duration-150"
           >
             {link.label === 'Email' ? link.handle : link.label}
             {link.label !== 'Email' ? (
@@ -26,10 +26,10 @@ const links = getSocialLinks(email).filter((link) => link.label !== 'Freelance w
           </a>
         ))}
       </div>
-      <p class="text-[11px] text-[#7a7f87]/70 font-mono mt-4">© 2026 - Eric Ruelas</p>
+      <p class="text-[11px] text-[var(--color-text-muted)]/70 font-mono mt-4">© 2026 - Eric Ruelas</p>
     </div>
 
-    <div class="text-[13px] text-[#7a7f87] leading-[1.5] sm:text-right">
+    <div class="text-[13px] text-[var(--color-text-muted)] leading-[1.5] sm:text-right">
       <p>San Francisco Bay Area, USA</p>
       <p id="footer-local-time">&nbsp;</p>
     </div>

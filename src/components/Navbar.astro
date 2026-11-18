@@ -1,5 +1,6 @@
 ---
 import { Menu, X } from '@lucide/astro';
+import ThemeToggle from './ThemeToggle.astro';
 
 const pathname = Astro.url.pathname;
 const isWork = pathname.startsWith('/work');
@@ -23,8 +24,8 @@ const links = [
 <header class="px-6 pt-6">
   <nav class="flex items-center justify-between gap-4">
     <a href="/" class="flex flex-col leading-tight shrink-0 hover:opacity-75 transition-opacity duration-150">
-      <span class="text-[#343844] text-[18px] font-normal leading-none">Eric Ruelas</span>
-      <span class="text-[#5c6168] text-[13px] font-normal leading-none mt-1">Product Designer</span>
+      <span class="text-[var(--color-text)] text-[18px] font-normal leading-none">Eric Ruelas</span>
+      <span class="text-[var(--color-text-secondary)] text-[13px] font-normal leading-none mt-1">Product Designer</span>
     </a>
 
     <!-- Desktop links -->
@@ -35,25 +36,29 @@ const links = [
           class:list={[
             'text-[14px] transition-colors duration-150',
             link.active
-              ? 'text-[#3d4c74] font-medium underline underline-offset-4 decoration-1'
-              : 'text-[#5c6168] hover:text-[#3d4c74] hover:underline underline-offset-4 decoration-1'
+              ? 'text-[var(--color-accent)] font-medium underline underline-offset-4 decoration-1'
+              : 'text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:underline underline-offset-4 decoration-1'
           ]}
         >
           {link.label}
         </a>
       ))}
+      <ThemeToggle />
     </div>
 
     <!-- Mobile hamburger -->
-    <button
-      id="nav-menu-btn"
-      class="sm:hidden flex items-center justify-center w-9 h-9 rounded-full border border-[#3d4c74] text-[#3d4c74] cursor-pointer shrink-0"
-      aria-label="Open menu"
-      aria-expanded="false"
-    >
-      <span id="nav-menu-icon"><Menu size={16} strokeWidth={1.5} /></span>
-      <span id="nav-menu-close-icon" class="hidden"><X size={16} strokeWidth={1.5} /></span>
-    </button>
+    <div class="sm:hidden flex items-center gap-3 shrink-0">
+      <ThemeToggle />
+      <button
+        id="nav-menu-btn"
+        class="flex items-center justify-center w-9 h-9 rounded-full border border-[var(--color-accent)] text-[var(--color-accent)] cursor-pointer shrink-0"
+        aria-label="Open menu"
+        aria-expanded="false"
+      >
+        <span id="nav-menu-icon"><Menu size={16} strokeWidth={1.5} /></span>
+        <span id="nav-menu-close-icon" class="hidden"><X size={16} strokeWidth={1.5} /></span>
+      </button>
+    </div>
   </nav>
 
   <!-- Mobile dropdown panel -->
@@ -64,7 +69,7 @@ const links = [
           href={link.href}
           class:list={[
             'text-[15px] py-2 transition-colors duration-150',
-            link.active ? 'text-[#3d4c74] font-medium' : 'text-[#5c6168]'
+            link.active ? 'text-[var(--color-accent)] font-medium' : 'text-[var(--color-text-secondary)]'
           ]}
         >
           {link.label}

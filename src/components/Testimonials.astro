@@ -17,8 +17,8 @@ const TRUNCATE_LENGTH = 180;
 
 <section class="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-16 py-8 sm:py-12">
   <div class="flex items-center gap-2 sm:gap-3 lg:w-[320px] lg:shrink-0">
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16" shape-rendering="crispEdges" class="shrink-0 text-[#3d4c74]"><path fill="currentColor" d="M2 2h12v1h-12zM1 3h1v1h-1zM14 3h1v1h-1zM1 4h1v1h-1zM14 4h1v1h-1zM1 5h1v1h-1zM5 5h2v1h-2zM9 5h2v1h-2zM14 5h1v1h-1zM1 6h1v1h-1zM5 6h2v1h-2zM9 6h2v1h-2zM14 6h1v1h-1zM1 7h1v1h-1zM5 7h1v1h-1zM9 7h1v1h-1zM14 7h1v1h-1zM1 8h1v1h-1zM14 8h1v1h-1zM1 9h1v1h-1zM14 9h1v1h-1zM1 10h1v1h-1zM14 10h1v1h-1zM2 11h12v1h-12zM3 12h2v1h-2zM3 13h1v1h-1z"/></svg>
-    <h2 class="text-[28px] text-[#343844] font-normal leading-[1.2] whitespace-nowrap">Testimonials</h2>
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16" shape-rendering="crispEdges" class="shrink-0 text-[var(--color-accent)]"><path fill="currentColor" d="M2 2h12v1h-12zM1 3h1v1h-1zM14 3h1v1h-1zM1 4h1v1h-1zM14 4h1v1h-1zM1 5h1v1h-1zM5 5h2v1h-2zM9 5h2v1h-2zM14 5h1v1h-1zM1 6h1v1h-1zM5 6h2v1h-2zM9 6h2v1h-2zM14 6h1v1h-1zM1 7h1v1h-1zM5 7h1v1h-1zM9 7h1v1h-1zM14 7h1v1h-1zM1 8h1v1h-1zM14 8h1v1h-1zM1 9h1v1h-1zM14 9h1v1h-1zM1 10h1v1h-1zM14 10h1v1h-1zM2 11h12v1h-12zM3 12h2v1h-2zM3 13h1v1h-1z"/></svg>
+    <h2 class="text-[28px] text-[var(--color-text)] font-normal leading-[1.2] whitespace-nowrap">Testimonials</h2>
   </div>
 
   <div class="flex flex-col gap-8 flex-1 lg:max-w-[700px]">
@@ -26,13 +26,13 @@ const TRUNCATE_LENGTH = 180;
       const short = t.quote.slice(0, TRUNCATE_LENGTH).trimEnd();
       const needsTruncation = t.quote.length > TRUNCATE_LENGTH;
       return (
-        <div class="pl-4 border-l-2 border-[#dadce0]">
-          <p class="text-[15px] text-[#343844] leading-[1.7]">
+        <div class="pl-4 border-l-2 border-[var(--color-border)]">
+          <p class="text-[15px] text-[var(--color-text)] leading-[1.7]">
             <span class="short-quote" data-index={i}>
               {needsTruncation ? short + '… ' : t.quote}
               {needsTruncation && (
                 <button
-                  class="read-more-btn inline text-[#5c6168] hover:text-[#3d4c74] transition-colors duration-150 text-[13px]"
+                  class="read-more-btn inline text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors duration-150 text-[13px]"
                   data-index={i}
                 >
                   Read more ↓
@@ -42,7 +42,7 @@ const TRUNCATE_LENGTH = 180;
             <span class="full-quote hidden" data-index={i}>
               {t.quote}{' '}
               <button
-                class="read-less-btn inline text-[#5c6168] hover:text-[#3d4c74] transition-colors duration-150 text-[13px]"
+                class="read-less-btn inline text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors duration-150 text-[13px]"
                 data-index={i}
               >
                 Read less ↑
@@ -50,8 +50,8 @@ const TRUNCATE_LENGTH = 180;
             </span>
           </p>
           <div class="mt-4">
-            <p class="text-[15px] text-[#343844] font-medium">{t.name}</p>
-            <p class="text-[13px] text-[#5c6168] mt-0.5">{t.role}</p>
+            <p class="text-[15px] text-[var(--color-text)] font-medium">{t.name}</p>
+            <p class="text-[13px] text-[var(--color-text-secondary)] mt-0.5">{t.role}</p>
           </div>
         </div>
       );

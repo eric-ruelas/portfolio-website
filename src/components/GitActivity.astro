@@ -4,17 +4,17 @@ const username = 'eric-ruelas';
 
 <section class="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-16 py-8 sm:py-12">
   <div class="flex items-center gap-2 sm:gap-3 lg:w-[320px] lg:shrink-0">
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16" shape-rendering="crispEdges" class="shrink-0 text-[#3d4c74]"><path fill="currentColor" d="M3 2h3v1h-3zM3 3h1v1h-1zM5 3h1v1h-1zM10 3h3v1h-3zM3 4h3v1h-3zM10 4h1v1h-1zM12 4h1v1h-1zM4 5h1v1h-1zM10 5h3v1h-3zM4 6h1v1h-1zM11 6h1v1h-1zM4 7h1v1h-1zM11 7h1v1h-1zM4 8h8v1h-8zM4 9h1v1h-1zM4 10h1v1h-1zM3 11h3v1h-3zM3 12h1v1h-1zM5 12h1v1h-1zM3 13h3v1h-3z"/></svg>
-    <h2 class="text-[28px] text-[#343844] font-normal leading-[1.2] whitespace-nowrap">Git Activity</h2>
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16" shape-rendering="crispEdges" class="shrink-0 text-[var(--color-accent)]"><path fill="currentColor" d="M3 2h3v1h-3zM3 3h1v1h-1zM5 3h1v1h-1zM10 3h3v1h-3zM3 4h3v1h-3zM10 4h1v1h-1zM12 4h1v1h-1zM4 5h1v1h-1zM10 5h3v1h-3zM4 6h1v1h-1zM11 6h1v1h-1zM4 7h1v1h-1zM11 7h1v1h-1zM4 8h8v1h-8zM4 9h1v1h-1zM4 10h1v1h-1zM3 11h3v1h-3zM3 12h1v1h-1zM5 12h1v1h-1zM3 13h3v1h-3z"/></svg>
+    <h2 class="text-[28px] text-[var(--color-text)] font-normal leading-[1.2] whitespace-nowrap">Git Activity</h2>
   </div>
 
   <div class="flex-1 lg:max-w-[700px]">
-    <p class="text-[11px] font-semibold tracking-widest uppercase text-[#5c6168] mb-3">Last 30 days</p>
+    <p class="text-[11px] font-semibold tracking-widest uppercase text-[var(--color-text-secondary)] mb-3">Last 30 days</p>
 
     <!-- Grid populated client-side so data is always fresh -->
     <div id="git-grid" class="grid grid-cols-[repeat(30,minmax(0,1fr))] gap-1 w-full">
       {Array.from({ length: 30 }).map(() => (
-        <div class="aspect-square w-full rounded-[3px] bg-[#e2e4e9] animate-pulse" />
+        <div class="aspect-square w-full rounded-[3px] bg-[var(--color-surface-muted)] animate-pulse" />
       ))}
     </div>
 
@@ -23,11 +23,11 @@ const username = 'eric-ruelas';
         href={`https://github.com/${username}`}
         target="_blank"
         rel="noopener noreferrer"
-        class="text-[13px] text-[#5c6168] hover:text-[#3d4c74] transition-colors"
+        class="text-[13px] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
       >
         github.com/{username}
       </a>
-      <span id="git-total" class="text-[13px] text-[#5c6168] hidden"></span>
+      <span id="git-total" class="text-[13px] text-[var(--color-text-secondary)] hidden"></span>
     </div>
   </div>
 </section>
@@ -36,11 +36,11 @@ const username = 'eric-ruelas';
   const username = 'eric-ruelas';
 
   const colors: Record<number, string> = {
-    0: '#e2e4e9',
-    1: 'rgba(61,76,116,0.22)',
-    2: 'rgba(61,76,116,0.44)',
-    3: 'rgba(61,76,116,0.70)',
-    4: '#3d4c74',
+    0: 'var(--color-surface-muted)',
+    1: 'var(--git-level-1)',
+    2: 'var(--git-level-2)',
+    3: 'var(--git-level-3)',
+    4: 'var(--git-level-4)',
   };
 
   const labels: Record<number, string> = {

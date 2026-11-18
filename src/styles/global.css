@@ -6,6 +6,42 @@
 
 :root {
   --font-geist-mono: "Geist Mono", monospace;
+
+  --color-bg: #f9f8f6;
+  --color-bg-dot: #e5e5e5;
+  --color-text: #343844;
+  --color-text-secondary: #5c6168;
+  --color-text-muted: #7a7f87;
+  --color-accent: #3d4c74;
+  --color-accent-soft: rgba(61, 76, 116, 0.08);
+  --color-border: #dadce0;
+  --color-surface: #ffffff;
+  --color-surface-muted: #e2e4e9;
+  --color-shadow: rgba(52, 56, 68, 0.08);
+
+  --git-level-1: rgba(61, 76, 116, 0.22);
+  --git-level-2: rgba(61, 76, 116, 0.44);
+  --git-level-3: rgba(61, 76, 116, 0.7);
+  --git-level-4: #3d4c74;
+}
+
+html[data-theme="dark"] {
+  --color-bg: #15171c;
+  --color-bg-dot: #2a2d33;
+  --color-text: #e9eaed;
+  --color-text-secondary: #9aa0ab;
+  --color-text-muted: #71767f;
+  --color-accent: #93a6d9;
+  --color-accent-soft: rgba(147, 166, 217, 0.12);
+  --color-border: #32353c;
+  --color-surface: #1b1d22;
+  --color-surface-muted: #24262c;
+  --color-shadow: rgba(0, 0, 0, 0.35);
+
+  --git-level-1: rgba(147, 166, 217, 0.25);
+  --git-level-2: rgba(147, 166, 217, 0.45);
+  --git-level-3: rgba(147, 166, 217, 0.7);
+  --git-level-4: #93a6d9;
 }
 
 h1, h2, h3 {
@@ -15,13 +51,14 @@ h1, h2, h3 {
 }
 
 body {
-  background-color: #f9f8f6;
-  background-image: radial-gradient(circle, #E5E5E5 1px, transparent 1px);
+  background-color: var(--color-bg);
+  background-image: radial-gradient(circle, var(--color-bg-dot) 1px, transparent 1px);
   background-size: 20px 20px;
   background-attachment: fixed;
-  color: #343844;
+  color: var(--color-text);
   font-family: "Geist Mono", monospace;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Scroll fade-in */

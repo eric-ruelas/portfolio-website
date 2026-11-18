@@ -37,27 +37,27 @@ for (const note of allNotes) {
     <main class="flex-1 px-6 py-8 sm:py-12">
       <div class="max-w-[700px]">
         <div class="flex items-center gap-2 sm:gap-3 mb-10">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16" shape-rendering="crispEdges" class="shrink-0 text-[#3d4c74]"><path fill="currentColor" d="M4 2h8v1h-8zM3 3h1v1h-1zM12 3h1v1h-1zM3 4h1v1h-1zM5 4h6v1h-6zM12 4h1v1h-1zM3 5h1v1h-1zM12 5h1v1h-1zM3 6h1v1h-1zM5 6h6v1h-6zM12 6h1v1h-1zM3 7h1v1h-1zM12 7h1v1h-1zM3 8h1v1h-1zM5 8h6v1h-6zM12 8h1v1h-1zM3 9h1v1h-1zM12 9h1v1h-1zM3 10h1v1h-1zM5 10h4v1h-4zM12 10h1v1h-1zM3 11h1v1h-1zM12 11h1v1h-1zM3 12h1v1h-1zM12 12h1v1h-1zM4 13h8v1h-8z"/></svg>
-          <h1 class="text-[28px] text-[#343844] font-normal leading-[1.2]">Notes</h1>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16" shape-rendering="crispEdges" class="shrink-0 text-[var(--color-accent)]"><path fill="currentColor" d="M4 2h8v1h-8zM3 3h1v1h-1zM12 3h1v1h-1zM3 4h1v1h-1zM5 4h6v1h-6zM12 4h1v1h-1zM3 5h1v1h-1zM12 5h1v1h-1zM3 6h1v1h-1zM5 6h6v1h-6zM12 6h1v1h-1zM3 7h1v1h-1zM12 7h1v1h-1zM3 8h1v1h-1zM5 8h6v1h-6zM12 8h1v1h-1zM3 9h1v1h-1zM12 9h1v1h-1zM3 10h1v1h-1zM5 10h4v1h-4zM12 10h1v1h-1zM3 11h1v1h-1zM12 11h1v1h-1zM3 12h1v1h-1zM12 12h1v1h-1zM4 13h8v1h-8z"/></svg>
+          <h1 class="text-[28px] text-[var(--color-text)] font-normal leading-[1.2]">Notes</h1>
         </div>
 
         {notesByYear.map(({ year, notes }) => (
           <div class="mb-12">
-            <p class="text-[13px] text-[#5c6168] font-mono pb-3 mb-6 border-b border-[#dadce0]">{year}</p>
+            <p class="text-[13px] text-[var(--color-text-secondary)] font-mono pb-3 mb-6 border-b border-[var(--color-border)]">{year}</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {notes.map((note) => (
                 <a
                   href={`/notes/${note.id}`}
-                  class="group flex flex-col justify-between min-h-[160px] rounded-2xl border border-[#dadce0] bg-white p-6 hover:border-[#3d4c74]/30 hover:shadow-[0_8px_24px_rgba(52,56,68,0.08)] transition-all duration-150"
+                  class="group flex flex-col justify-between min-h-[160px] rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 hover:border-[var(--color-accent)]/30 hover:shadow-[0_8px_24px_var(--color-shadow)] transition-all duration-150"
                 >
                   <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" class="shrink-0 text-[#3d4c74] mb-4"><path fill="currentColor" d="M2 2h12v1h-12zM1 3h1v1h-1zM14 3h1v1h-1zM1 4h1v1h-1zM14 4h1v1h-1zM1 5h1v1h-1zM4 5h1v1h-1zM14 5h1v1h-1zM1 6h1v1h-1zM5 6h1v1h-1zM14 6h1v1h-1zM1 7h1v1h-1zM6 7h1v1h-1zM14 7h1v1h-1zM1 8h1v1h-1zM5 8h1v1h-1zM14 8h1v1h-1zM1 9h1v1h-1zM4 9h1v1h-1zM7 9h4v1h-4zM14 9h1v1h-1zM1 10h1v1h-1zM14 10h1v1h-1zM1 11h1v1h-1zM14 11h1v1h-1zM1 12h1v1h-1zM14 12h1v1h-1zM2 13h12v1h-12z"/></svg>
-                    <h2 class="text-[18px] text-[#343844] font-medium leading-snug group-hover:text-[#3d4c74] transition-colors duration-150">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" class="shrink-0 text-[var(--color-accent)] mb-4"><path fill="currentColor" d="M2 2h12v1h-12zM1 3h1v1h-1zM14 3h1v1h-1zM1 4h1v1h-1zM14 4h1v1h-1zM1 5h1v1h-1zM4 5h1v1h-1zM14 5h1v1h-1zM1 6h1v1h-1zM5 6h1v1h-1zM14 6h1v1h-1zM1 7h1v1h-1zM6 7h1v1h-1zM14 7h1v1h-1zM1 8h1v1h-1zM5 8h1v1h-1zM14 8h1v1h-1zM1 9h1v1h-1zM4 9h1v1h-1zM7 9h4v1h-4zM14 9h1v1h-1zM1 10h1v1h-1zM14 10h1v1h-1zM1 11h1v1h-1zM14 11h1v1h-1zM1 12h1v1h-1zM14 12h1v1h-1zM2 13h12v1h-12z"/></svg>
+                    <h2 class="text-[18px] text-[var(--color-text)] font-medium leading-snug group-hover:text-[var(--color-accent)] transition-colors duration-150">
                       {note.data.title}
                     </h2>
                   </div>
-                  <p class="text-[13px] text-[#5c6168]">{formatShortDate(note.data.date)}</p>
+                  <p class="text-[13px] text-[var(--color-text-secondary)]">{formatShortDate(note.data.date)}</p>
                 </a>
               ))}
             </div>
