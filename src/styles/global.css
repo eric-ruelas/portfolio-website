@@ -61,6 +61,15 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+/* Same dot pattern as body, for elements (like a sticky overlay) that need
+   an opaque backdrop that still blends into the page instead of a flat box. */
+.bg-dot-pattern {
+  background-color: var(--color-bg);
+  background-image: radial-gradient(circle, var(--color-bg-dot) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed;
+}
+
 /* Scroll fade-in */
 [data-animate] {
   opacity: 0;
