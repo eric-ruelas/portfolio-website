@@ -15,9 +15,12 @@ const links = getSocialLinks(email).filter((link) => link.label !== 'Freelance w
             target={link.label !== 'Email' ? '_blank' : undefined}
             rel={link.rel}
             data-track-contact={link.label.toLowerCase()}
-            class="text-[13px] text-[#5c6168] hover:text-[#3d4c74] hover:underline underline-offset-4 decoration-1 transition-colors duration-150"
+            class="inline-flex items-center gap-1 text-[13px] text-[#5c6168] hover:text-[#3d4c74] hover:underline underline-offset-4 decoration-1 transition-colors duration-150"
           >
             {link.label === 'Email' ? link.handle : link.label}
+            {link.label !== 'Email' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" shape-rendering="crispEdges" class="shrink-0"><path fill="currentColor" d="M6 2h8v1h-8zM12 3h2v1h-2zM11 4h1v1h-1zM13 4h1v1h-1zM10 5h1v1h-1zM13 5h1v1h-1zM9 6h1v1h-1zM13 6h1v1h-1zM8 7h1v1h-1zM13 7h1v1h-1zM7 8h1v1h-1zM13 8h1v1h-1zM6 9h1v1h-1zM13 9h1v1h-1zM5 10h1v1h-1zM4 11h1v1h-1zM3 12h1v1h-1zM2 13h1v1h-1z"/></svg>
+            )}
           </a>
         ))}
       </div>
