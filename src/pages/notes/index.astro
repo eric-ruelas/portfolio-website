@@ -51,9 +51,12 @@ for (const note of allNotes) {
                   href={`/notes/${note.id}`}
                   class="group flex flex-col justify-between min-h-[160px] rounded-2xl border border-[#dadce0] bg-white p-6 hover:border-[#3d4c74]/30 hover:shadow-[0_8px_24px_rgba(52,56,68,0.08)] transition-all duration-150"
                 >
-                  <h2 class="text-[18px] text-[#343844] font-medium leading-snug group-hover:text-[#3d4c74] transition-colors duration-150">
-                    {note.data.title}
-                  </h2>
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" class="shrink-0 text-[#3d4c74] mb-4"><path fill="currentColor" d="M2 2h12v1h-12zM1 3h1v1h-1zM14 3h1v1h-1zM1 4h1v1h-1zM14 4h1v1h-1zM1 5h1v1h-1zM4 5h1v1h-1zM14 5h1v1h-1zM1 6h1v1h-1zM5 6h1v1h-1zM14 6h1v1h-1zM1 7h1v1h-1zM6 7h1v1h-1zM14 7h1v1h-1zM1 8h1v1h-1zM5 8h1v1h-1zM14 8h1v1h-1zM1 9h1v1h-1zM4 9h1v1h-1zM7 9h4v1h-4zM14 9h1v1h-1zM1 10h1v1h-1zM14 10h1v1h-1zM1 11h1v1h-1zM14 11h1v1h-1zM1 12h1v1h-1zM14 12h1v1h-1zM2 13h12v1h-12z"/></svg>
+                    <h2 class="text-[18px] text-[#343844] font-medium leading-snug group-hover:text-[#3d4c74] transition-colors duration-150">
+                      {note.data.title}
+                    </h2>
+                  </div>
                   <p class="text-[13px] text-[#5c6168]">{formatShortDate(note.data.date)}</p>
                 </a>
               ))}
