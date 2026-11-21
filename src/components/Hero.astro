@@ -4,7 +4,7 @@
 <section class="flex-1 flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12 px-6 py-10">
   <div class="flex-1 flex flex-col justify-center">
     <div class="flex flex-col gap-6 sm:gap-10 max-w-[640px]">
-      <h1 class="text-[32px] sm:text-[48px] text-[var(--color-text)] font-normal leading-[1.1] tracking-[-0.03em]">
+      <h1 class="hero-heading text-[32px] sm:text-[48px] text-[var(--color-text)] font-normal leading-[1.1] tracking-[-0.03em]" data-scramble>
         Designing products that put people first.
       </h1>
 
@@ -29,3 +29,75 @@
     </div>
   </div>
 </section>
+
+<style>
+  .hero-heading .char {
+    color: var(--color-text-muted);
+  }
+  .hero-heading .char.is-set {
+    color: var(--color-text);
+  }
+</style>
+
+<script>
+  function scrambleHeading() {
+    const heading = document.querySelector<HTMLElement>('[data-scramble]');
+    if (!heading || heading.dataset.scrambled) return;
+    heading.dataset.scrambled = 'true';
+
+    const text = heading.textContent ?? '';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const glyph = () => GLYPHS[(Math.random() * GLYPHS.length) | 0];
+    const FLICKER = 0.055;
+
+    heading.textContent = '';
+    const cells = [...text].map((ch, i) => {
+      const span = document.createElement('span');
+      span.className = 'char';
+      heading.appendChild(span);
+      return {
+        span,
+        to: ch,
+        at: 0.18 + i * 0.035 + Math.random() * 0.28,
+        tick: 0,
+        done: false,
+      };
+    });
+
+    let clock = 0;
+    let last = performance.now();
+
+    function frame(now: number) {
+      const dt = Math.min((now - last) / 1000, 1 / 30);
+      last = now;
+      clock += dt;
+
+      let pending = false;
+      cells.forEach((c) => {
+        if (c.done) return;
+        if (clock >= c.at) {
+          c.done = true;
+          c.span.textContent = c.to;
+          c.span.classList.add('is-set');
+        } else {
+          pending = true;
+          if (c.to === ' ') {
+            c.span.textContent = ' ';
+            c.span.classList.add('is-set');
+          } else if (clock >= c.tick) {
+            c.span.textContent = glyph();
+            c.tick = clock + FLICKER;
+          }
+        }
+      });
+
+      if (pending) requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  document.addEventListener('astro:page-load', scrambleHeading);
+</script>
