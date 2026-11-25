@@ -2,7 +2,7 @@
 import { getSocialLinks } from '../lib/social';
 
 const email = import.meta.env.PUBLIC_EMAIL ?? '';
-const links = getSocialLinks(email).filter((link) => link.label !== 'Freelance work');
+const links = getSocialLinks(email);
 ---
 
 <footer class="px-6 pt-10 sm:pt-16 pb-8 sm:pb-10">
